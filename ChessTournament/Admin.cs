@@ -120,7 +120,7 @@ namespace ChessTournament
 
         internal string GetSummary()
         {
-            var sb = new StringBuilder().AppendLine($"Results Summary\t\t\t\t\t@{DateTime.Now}");
+            var sb = new StringBuilder().AppendLine($"\nSummary of the Results\t\t\t@{DateTime.Now}");
             sb.AppendLine($"No. Of Players:\t\t{ProblemDesc.NoOfPlayers,4}\t\t" +
                           $"Desired Rounds:\t\t{ProblemDesc.NoOfRoundsDesired,4}\t\tActual Rounds:\t\t{NoOfActualRounds,5}");
 

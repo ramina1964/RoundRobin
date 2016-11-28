@@ -22,6 +22,8 @@ namespace ChessTournament
                 var admin = new Admin();
                 admin.ToFile();
                 Console.WriteLine(admin.Summary);
+
+                Console.ReadLine();
             }
 
             catch (ArgumentOutOfRangeException ex)
