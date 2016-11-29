@@ -17,12 +17,6 @@ namespace ChessTournament
 		internal int Index { get; }
 		internal int Rank { get; }
 
-		public int Compare(Player x, Player y)
-		{
-			if (x.Index > y.Index)
-				return 1;
-
-			return 0;
-		}
+		public int Compare(Player x, Player y) => x.Index > y.Index ? 1 : 0;
 	}
 }

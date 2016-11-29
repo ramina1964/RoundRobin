@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Facet.Combinatorics;
 
 namespace ChessTournament
 {
@@ -62,33 +63,47 @@ namespace ChessTournament
             var result = new List<Player>(NoOfPlayers);
             for (var i = 0; i < NoOfPlayers; i++)
             {
-                var p = new Player(i, i);
+                var p = new Player(i, i + 1);
                 result.Insert(i, p);
             }
 
             return result;
         }
 
-        public static HashSet<HashSet<Match>> InitializeAllMatches(IEnumerable<Player> list)
+        public static HashSet<HashSet<Match>> InitializeAllMatches()
         {
+            var players = InitializePlayers();
+            var idList = GetPlayerIds(players);
             var result = new HashSet<HashSet<Match>>();
-            var enumerable = list as Player[] ?? list.ToArray();
-            var count = enumerable.Count();
 
-            const int seqLength = 2;
-            for (var i = 0; i < count - seqLength + 1; i++)
+            var comb = new Combinations<int>(idList, 2).ToList();
+
+            var innerList = new HashSet<Match>();
+            foreach (var item in comb)
             {
-                var innerList = new HashSet<Match>();
-                for (var j = i + 1; j <= count - 1; j++)
+                var p1 = Utility.FindPlayer(players, item[0]);
+                var p2 = Utility.FindPlayer(players, item[1]);
+                var match = new Match(p1, p2);
+                if (p2.Index - p1.Index == 1)
                 {
-                    var match = new Match(enumerable.ElementAt(i), enumerable.ElementAt(j));
-                    innerList.Add(match);
+                    if (innerList.Count > 0)
+                    { result.Add(innerList); }
+                    innerList = new HashSet<Match>() {match};
+                    continue;
                 }
 
-                result.Add(innerList);
+                innerList.Add(match);
+                if (p2.Index - p1.Index == 1)
+                { result.Add(innerList); }
             }
 
+            result.Add(innerList);
             return result;
+        }
+
+        private static IList<int> GetPlayerIds(IEnumerable<Player> players)
+        {
+            return players.Select(item => item.Index).ToList();
         }
 
         private static int _noOfPlayers;

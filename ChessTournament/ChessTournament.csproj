@@ -53,6 +53,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,6 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin.cs" />
+    <Compile Include="Combinatorics\Combinations.cs" />
+    <Compile Include="Combinatorics\GenerateOption.cs" />
+    <Compile Include="Combinatorics\IMetaCollection.cs" />
+    <Compile Include="Combinatorics\Permutations.cs" />
+    <Compile Include="Combinatorics\SmallPrimeUtility.cs" />
+    <Compile Include="Combinatorics\Variations.cs" />
     <Compile Include="Match.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="ProblemDesc.cs" />
@@ -85,6 +92,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

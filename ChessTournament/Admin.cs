@@ -16,8 +16,7 @@ namespace ChessTournament
 
         public Admin()
         {
-            var players = ProblemDesc.InitializePlayers();
-            _allMatches = ProblemDesc.InitializeAllMatches(players);
+            _allMatches = ProblemDesc.InitializeAllMatches();
 
             _isMatchPlayed = Utility.InitializeRoundMatches(ProblemDesc.NoOfPlayers);
             _rounds = EstimateElapsedTime();

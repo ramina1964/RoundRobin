@@ -93,12 +93,12 @@ namespace ChessTournament
         private static int? FindFirstPlayer(IReadOnlyList<bool> isPlayerBusy)
         {
             var noOfPlayers = isPlayerBusy.Count;
-            for (var index = 0; index < noOfPlayers; index++)
+            for (var id = 0; id < noOfPlayers; id++)
             {
-                if (isPlayerBusy[index])
+                if (isPlayerBusy[id])
                     continue;
 
-                return index;
+                return id;
             }
             return null;
         }
