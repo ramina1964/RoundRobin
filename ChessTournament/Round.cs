@@ -22,10 +22,7 @@ namespace ChessTournament
         internal int Count => _matches.Count;
         internal bool IsEmpty => _matches.Count == 0;
 
-        private int RoundCost()
-        {
-            return _matches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
-        }
+        private int RoundCost() => _matches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
 
         private static HashSet<Match> SetupRound(HashSet<HashSet<Match>> allMatches, bool[,] isPlayed)
         {
