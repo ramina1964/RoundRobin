@@ -84,7 +84,7 @@ namespace ChessTournament
                 var p1 = Utility.FindPlayer(players, item[0]);
                 var p2 = Utility.FindPlayer(players, item[1]);
                 var match = new Match(p1, p2);
-                if (p2.Index - p1.Index == 1)
+                if (p2.Id - p1.Id == 1)
                 {
                     if (innerList.Count > 0)
                     { result.Add(innerList); }
@@ -93,7 +93,7 @@ namespace ChessTournament
                 }
 
                 innerList.Add(match);
-                if (p2.Index - p1.Index == 1)
+                if (p2.Id - p1.Id == 1)
                 { result.Add(innerList); }
             }
 
@@ -103,7 +103,7 @@ namespace ChessTournament
 
         private static IList<int> GetPlayerIds(IEnumerable<Player> players)
         {
-            return players.Select(item => item.Index).ToList();
+            return players.Select(item => item.Id).ToList();
         }
 
         private static int _noOfPlayers;

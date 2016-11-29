@@ -20,12 +20,12 @@ namespace ChessTournament
         {
             foreach (var match in playedMatches.ToList())
             {
-                isMatchPlayed[match.FstPLayerIdx, match.SndPlayerIdx] = true;
-                isMatchPlayed[match.SndPlayerIdx, match.FstPLayerIdx] = true;
+                isMatchPlayed[match.FstPLayerId, match.SndPlayerId] = true;
+                isMatchPlayed[match.SndPlayerId, match.FstPLayerId] = true;
             }
         }
 
-        internal static Player FindPlayer(List<Player> players, int idx) => players.FirstOrDefault(p => p.Index == idx);
+        internal static Player FindPlayer(List<Player> players, int idx) => players.FirstOrDefault(p => p.Id == idx);
 
         internal static IEnumerable<int> FindPlayersToMeet(int idx, bool[,] isPlayed)
         {

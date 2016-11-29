@@ -4,19 +4,19 @@ namespace ChessTournament
 {
 	public class Player : IComparer<Player>
 	{
-		public Player(int index, int rank)
+		public Player(int id, int rank)
 		{
-			// Add exception handling for index and rank.
-			// Index must be greater or equal than zero.
+			// Add exception handling for id and rank.
+			// Id must be greater or equal than zero.
 			// Rank must be greater than zero.
 
-			Index = index;
+			Id = id;
 			Rank = rank;
 		}
 
-		internal int Index { get; }
+		internal int Id { get; }
 		internal int Rank { get; }
 
-		public int Compare(Player x, Player y) => x.Index > y.Index ? 1 : 0;
+		public int Compare(Player x, Player y) => x.Id > y.Id ? 1 : 0;
 	}
 }

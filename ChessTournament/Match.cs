@@ -5,15 +5,15 @@ namespace ChessTournament
     {
         public Match(Player fstPlayer, Player sndPlayer)
         {
-            FstPLayerIdx = fstPlayer.Index;
-            SndPlayerIdx = sndPlayer.Index;
+            FstPLayerId = fstPlayer.Id;
+            SndPlayerId = sndPlayer.Id;
             FstPlayerRank = fstPlayer.Rank;
             SndPlayerRank = sndPlayer.Rank;
         }
 
-        public int FstPLayerIdx { get; }
+        public int FstPLayerId { get; }
 
-        public int SndPlayerIdx { get; }
+        public int SndPlayerId { get; }
 
         public int FstPlayerRank { get; }
 
@@ -21,7 +21,7 @@ namespace ChessTournament
 
         public override string ToString()
         {
-            return $"({FstPLayerIdx, 2}, {SndPlayerIdx, 2})";
+            return $"({FstPLayerId, 2}, {SndPlayerId, 2})";
         }
     }
 }
