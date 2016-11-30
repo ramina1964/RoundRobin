@@ -20,11 +20,11 @@ namespace ChessTournament
             OutputFile = ProblemDesc.OutputFile;
 
             Players = ProblemDesc.InitializePlayers();
-            _allMatches = ProblemDesc.InitializeAllMatches(Players);
+            AllMatches = ProblemDesc.InitializeAllMatches(Players);
 
-            _isMatchPlayed = Utility.InitializeRoundMatches(NoOfPlayers);
-            _rounds = EstimateElapsedTime();
-            Rounds = GetRounds;
+            IsMatchPlayed = Utility.InitializeRoundMatches(NoOfPlayers);
+            TriedRounds = EstimateElapsedTime();
+            Rounds = GetCompletedRounds;
             IsDesiredNoOfRoundsMet = Rounds.Count == NoOfRoundsDesired;
 
             NoOfActualRounds = Rounds.Count;
@@ -34,7 +34,7 @@ namespace ChessTournament
             ScreenSummary = GetSummary(OutputMedium.Screen);
         }
 
-        internal List<Round> GetRounds => _rounds.Where(aRound => aRound.Count == ProblemDesc.NoOfMatchesPerRound).ToList();
+        internal List<Round> GetCompletedRounds => TriedRounds.Where(aRound => aRound.Count == NoOfMatchesPerRound).ToList();
 
         internal int NoOfPlayers { get; }
 
@@ -90,7 +90,7 @@ namespace ChessTournament
                 return Empty;
 
             var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
-            var group = Utility.FindGroup(_isMatchPlayed);
+            var group = Utility.FindGroup(IsMatchPlayed);
             foreach (var item in group)
                 sb.Append($"{item,2} -> ");
 
@@ -138,11 +138,11 @@ namespace ChessTournament
             var rounds = new HashSet<Round>();
             for (var roundNo = 0; roundNo < ProblemDesc.NoOfRoundsDesired; roundNo++)
             {
-                var aRound = new Round(_allMatches, _isMatchPlayed);
+                var aRound = new Round(AllMatches, IsMatchPlayed);
                 if (aRound.Count != ProblemDesc.NoOfMatchesPerRound)
                     break;
 
-                Utility.UpdatedMatches(aRound.GetMatches, _isMatchPlayed);
+                Utility.UpdatedMatches(aRound.GetMatches, IsMatchPlayed);
                 rounds.Add(aRound);
             }
 
@@ -150,9 +150,9 @@ namespace ChessTournament
         }
 
         /*************************************************** Private Fields ****************************************************/
-        private readonly HashSet<HashSet<Match>> _allMatches;
-        private readonly bool[,] _isMatchPlayed;
-        private readonly HashSet<Round> _rounds;
+        private HashSet<HashSet<Match>> AllMatches { get; }
+        private bool[,] IsMatchPlayed { get; }
+        private HashSet<Round> TriedRounds { get; }
 
         private List<Player> Players { get; }
     }
