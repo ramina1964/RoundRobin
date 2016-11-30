@@ -10,7 +10,7 @@ namespace ChessTournament
 {
     public class Admin
     {
-/***************************************************** Constructors *****************************************/
+        /***************************************************** Constructors *****************************************/
         public Admin()
         {
             NoOfPlayers = ProblemDesc.NoOfPlayers;
@@ -138,7 +138,7 @@ namespace ChessTournament
             var rounds = new HashSet<Round>();
             for (var roundNo = 0; roundNo < NoOfRoundsDesired; roundNo++)
             {
-                var aRound = new Round(AllMatches, IsMatchPlayed);
+                var aRound = new Round(AllMatches);
                 if (aRound.Count != NoOfMatchesPerRound)
                     break;
 
