@@ -25,43 +25,38 @@ namespace ChessTournament
             }
         }
 
-        internal static Player FindPlayer(List<Player> players, int idx) => players.FirstOrDefault(p => p.Id == idx);
+        internal static Player FindPlayer(List<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
-        internal static IEnumerable<int> FindPlayersToMeet(int idx, bool[,] isPlayed)
+        internal static List<Player> FindPlayersToMeet(int id, HashSet<HashSet<Match>> matches)
         {
-            var result = new List<int>(NoOfPlayers);
-            for (var j = 0; j < NoOfPlayers; j++)
-            {
-                if (isPlayed[idx, j])
-                    continue;
-
-                result.Add(j);
-            }
+            var result = new List<Player>(NoOfPlayers - 1);
+            result.AddRange( from match in matches.ElementAt(id) where !match.IsPlayed select match.SndPlayer );
 
             return result;
         }
 
-        internal static IEnumerable<int> FindGroup(bool[,] isPlayed)
-        {
-            const int startId = 0;
-            var idx = startId;
+        //internal static IEnumerable<int> FindGroup(bool[,] isPlayed)
+        //{
+        //    const int startId = 0;
+        //    var idx = startId;
 
-            var results = new List<int> { startId };
-            while (true)
-            {
-                var partners = FindPlayersToMeet(idx, isPlayed);
-                var found = false;
-                foreach (var id in partners.Where(player => !results.Contains(player)))
-                {
-                    results.Add(id);
-                    idx = id;
-                    found = true;
-                    break;
-                }
+        //    var results = new List<int> { startId };
+        //    while (true)
+        //    {
+        //        var partners = FindPlayersToMeet(idx, isPlayed);
+        //        var found = false;
+        //        foreach (var id in partners.Where(player => !results.Contains(player)))
+        //        {
+        //            results.Add(id);
+        //            idx = id;
+        //            found = true;
+        //            break;
+        //        }
 
-                if (!found)
-                    return results;
-            }
-        }
+        //        if (!found)
+        //            return results;
+        //    }
+        //}
+
     }
 }

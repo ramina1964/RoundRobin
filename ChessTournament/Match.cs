@@ -5,12 +5,19 @@ namespace ChessTournament
     {
         public Match(Player fstPlayer, Player sndPlayer)
         {
-            FstPLayerId = fstPlayer.Id;
-            SndPlayerId = sndPlayer.Id;
-            FstPlayerRank = fstPlayer.Rank;
-            SndPlayerRank = sndPlayer.Rank;
+            FstPlayer = fstPlayer;
+            SndPlayer = sndPlayer;
+
+            FstPLayerId = FstPlayer.Id;
+            SndPlayerId = SndPlayer.Id;
+            FstPlayerRank = FstPlayer.Rank;
+            SndPlayerRank = SndPlayer.Rank;
             IsPlayed = false;
         }
+
+        public Player FstPlayer { get; set; }
+
+        public Player SndPlayer { get; set; }
 
         public int FstPLayerId { get; }
 

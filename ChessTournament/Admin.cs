@@ -84,15 +84,28 @@ namespace ChessTournament
         }
 
         /*************************************************** Private Methds ****************************************************/
+        //private string GetRemainingGroup()
+        //{
+        //    if (NoOfActualRounds == ProblemDesc.MaxNoOfRounds)
+        //        return Empty;
+
+        //    var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
+        //    var group = Utility.FindGroup(IsMatchPlayed);
+        //    foreach (var item in group)
+        //        sb.Append($"{item,2} -> ");
+
+        //    return sb.AppendLine().ToString();
+        //}
+
         private string GetRemainingGroup()
         {
             if (NoOfActualRounds == ProblemDesc.MaxNoOfRounds)
                 return Empty;
 
             var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
-            var group = Utility.FindGroup(IsMatchPlayed);
-            foreach (var item in group)
-                sb.Append($"{item,2} -> ");
+            // var group = Utility.FindGroup(IsMatchPlayed);
+            //foreach (var item in group)
+            //    sb.Append($"{item,2} -> ");
 
             return sb.AppendLine().ToString();
         }

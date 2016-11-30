@@ -18,12 +18,14 @@ namespace ChessTournament
 
         /********************************************** Class Interface **********************************************/
         internal int Cost { get; }
+
         internal List<Match> GetMatches => Matches.ToList();
+
         internal int Count => Matches.Count;
+
         internal bool IsEmpty => Matches.Count == 0;
 
         public override string ToString() => Display();
-
 
         /*********************************************** Private Fields **********************************************/
         private int RoundCost() => Matches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
