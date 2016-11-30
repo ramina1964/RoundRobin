@@ -7,22 +7,48 @@ namespace ChessTournament
 {
     public class Round
     {
-        private readonly HashSet<Match> _matches;
-
+        /************************************************ Constructor ************************************************/
         public Round(HashSet<HashSet<Match>> matches, bool[,] isPlayed)
         {
-            _matches = SetupRound(matches, isPlayed);
+            Matches = SetupRound(matches, isPlayed);
 
-            if (_matches.Count == ProblemDesc.NoOfMatchesPerRound)
+            if (Matches.Count == ProblemDesc.NoOfMatchesPerRound)
                 Cost = RoundCost();
         }
 
+        /********************************************** Class Interface **********************************************/
         internal int Cost { get; }
-        internal List<Match> GetMatches => _matches.ToList();
-        internal int Count => _matches.Count;
-        internal bool IsEmpty => _matches.Count == 0;
+        internal List<Match> GetMatches => Matches.ToList();
+        internal int Count => Matches.Count;
+        internal bool IsEmpty => Matches.Count == 0;
 
-        private int RoundCost() => _matches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
+        public override string ToString() => Display();
+
+
+        /*********************************************** Private Fields **********************************************/
+        private int RoundCost() => Matches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
+
+        private static Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId, bool[] isBusy, bool[,] isPlayed)
+        {
+            var fstPlayerId = FindFreePlayerId(isBusy);
+            if (fstPlayerId == null)
+                return null;
+
+            if (startSndId == null)
+                startSndId = fstPlayerId + 1;
+
+            var roundMatches = matches.ElementAt(fstPlayerId.Value);
+            foreach (var match in roundMatches.Where(match => !(match.SndPlayerId < startSndId) &&
+                                                         !isBusy[match.SndPlayerId] &&
+                                                         !isPlayed[match.FstPLayerId, match.SndPlayerId]))
+            {
+                isBusy[match.FstPLayerId] = true;
+                isBusy[match.SndPlayerId] = true;
+                return match;
+            }
+
+            return null;
+        }
 
         private static HashSet<Match> SetupRound(HashSet<HashSet<Match>> allMatches, bool[,] isPlayed)
         {
@@ -51,40 +77,16 @@ namespace ChessTournament
             return matches;
         }
 
-        internal static Match ChooseMatch(HashSet<HashSet<Match>> matches, int? startSndId, bool[] isBusy, bool[,] isPlayed)
-        {
-            var fstPlayerId = FindFreePlayerId(isBusy);
-            if (fstPlayerId == null)
-                return null;
 
-            if (startSndId == null)
-                startSndId = fstPlayerId + 1;
-
-            var roundMatches = matches.ElementAt(fstPlayerId.Value);
-            foreach (var match in roundMatches.Where(match => !(match.SndPlayerId < startSndId) &&
-                                                         !isBusy[match.SndPlayerId] &&
-                                                         !isPlayed[match.FstPLayerId, match.SndPlayerId]))
-            {
-                isBusy[match.FstPLayerId] = true;
-                isBusy[match.SndPlayerId] = true;
-                return match;
-            }
-
-            return null;
-        }
+        private HashSet<Match> Matches { get; }
 
         private string Display()
         {
             var sb = new StringBuilder();
-            foreach (var aMatch in _matches)
+            foreach (var aMatch in Matches)
                 sb.Append($"{aMatch}  ");
 
             return sb.ToString();
-        }
-
-        public override string ToString()
-        {
-            return Display();
         }
 
         private static int? FindFreePlayerId(IReadOnlyList<bool> isPlayerBusy)
@@ -101,3 +103,4 @@ namespace ChessTournament
         }
     }
 }
+ 

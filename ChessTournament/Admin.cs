@@ -136,10 +136,10 @@ namespace ChessTournament
         private HashSet<Round> SetupRounds()
         {
             var rounds = new HashSet<Round>();
-            for (var roundNo = 0; roundNo < ProblemDesc.NoOfRoundsDesired; roundNo++)
+            for (var roundNo = 0; roundNo < NoOfRoundsDesired; roundNo++)
             {
                 var aRound = new Round(AllMatches, IsMatchPlayed);
-                if (aRound.Count != ProblemDesc.NoOfMatchesPerRound)
+                if (aRound.Count != NoOfMatchesPerRound)
                     break;
 
                 Utility.UpdatedMatches(aRound.GetMatches, IsMatchPlayed);
