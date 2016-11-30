@@ -60,7 +60,7 @@ namespace ChessTournament
         
         internal string GetSummary(OutputMedium outputMedium)
         {
-            var title = $"\nSummary of the Results\t\t\t@{DateTime.Now}";
+            var title = $"Summary of the Results\t\t\t@{DateTime.Now}";
 
             var fstLine = $"No. Of Players:\t\t{NoOfPlayers,4}\t\t" +
                             $"Desired Rounds:\t\t{NoOfRoundsDesired,4}\t\tActual Rounds:\t\t{NoOfActualRounds,5}";

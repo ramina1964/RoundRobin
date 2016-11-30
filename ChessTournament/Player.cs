@@ -17,8 +17,10 @@ namespace ChessTournament
 
 			set
 			{
-				if(_id < 0 || _id > 1000000 )
+				if(0 > value || value > 1000000 )
 					throw new ArgumentOutOfRangeException(nameof(Id), value, "Value of Player ID is out of range!");
+
+				_id = value;
 			}
 		}
 
@@ -28,8 +30,10 @@ namespace ChessTournament
 
 			set
 			{
-				if (_rank < 0 || _rank > 3000)
+				if (0 > value || value > 3000)
 					throw new ArgumentOutOfRangeException(nameof(Rank), value, "Value of Rank is out of range!");
+
+				_rank = value;
 			}
 		}
 
@@ -37,7 +41,7 @@ namespace ChessTournament
 
 
 		/*********************************************** Private Fields **********************************************/
-		private readonly int _id;
-		private readonly int _rank;
+		private int _id;
+		private int _rank;
 	}
 }
