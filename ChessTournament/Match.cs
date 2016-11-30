@@ -9,6 +9,7 @@ namespace ChessTournament
             SndPlayerId = sndPlayer.Id;
             FstPlayerRank = fstPlayer.Rank;
             SndPlayerRank = sndPlayer.Rank;
+            IsPlayed = false;
         }
 
         public int FstPLayerId { get; }
@@ -18,6 +19,8 @@ namespace ChessTournament
         public int FstPlayerRank { get; }
 
         public int SndPlayerRank { get; }
+
+        public bool IsPlayed { get; set; }
 
         public override string ToString()
         {

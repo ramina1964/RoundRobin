@@ -38,10 +38,11 @@ namespace ChessTournament
                 startSndId = fstPlayerId + 1;
 
             var roundMatches = matches.ElementAt(fstPlayerId.Value);
-            foreach (var match in roundMatches.Where(match => !(match.SndPlayerId < startSndId) &&
-                                                         !isBusy[match.SndPlayerId] &&
-                                                         !isPlayed[match.FstPLayerId, match.SndPlayerId]))
+            foreach (var match in roundMatches)
             {
+                if (match.SndPlayerId < startSndId || isBusy[match.SndPlayerId] ||
+                    isPlayed[match.FstPLayerId, match.SndPlayerId]) continue;
+
                 isBusy[match.FstPLayerId] = true;
                 isBusy[match.SndPlayerId] = true;
                 return match;
