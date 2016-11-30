@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ChessTournament
 {
@@ -10,7 +9,6 @@ namespace ChessTournament
             try
             {
                 Console.WriteLine("Solution of Round Robin Setup\n");
-
                 Console.Write("Enter No. of Players:\t");
                 var noOfPlayers = Convert.ToInt32(Console.ReadLine());
 
@@ -18,11 +16,9 @@ namespace ChessTournament
                 var noOfRounbds = Convert.ToInt32(Console.ReadLine());
 
                 var problemDesc = new ProblemDesc(noOfPlayers, noOfRounbds);
-
                 var admin = new Admin();
-                admin.ToFile();
-                Console.WriteLine(admin.Summary);
 
+                Console.WriteLine(admin.ScreenSummary);
                 Console.ReadLine();
             }
 

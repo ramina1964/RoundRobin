@@ -70,6 +70,7 @@
     <Compile Include="Combinatorics\SmallPrimeUtility.cs" />
     <Compile Include="Combinatorics\Variations.cs" />
     <Compile Include="Match.cs" />
+    <Compile Include="OutputMedium.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="ProblemDesc.cs" />
     <Compile Include="Program.cs" />
