@@ -54,7 +54,8 @@ namespace ChessTournament
             NoOfRoundsDesired = noOfRounds;
             NoOfMatchesPerRound = NoOfPlayers / 2;
 
-            NoOfPossibleMatches = NoOfPlayers * (NoOfPlayers + 1) / 2;
+            // NoOfPossibleMatches = NoOfPlayers / ( 2! * (NoOfPlayers - 2)! )
+            NoOfPossibleMatches = NoOfPlayers * (NoOfPlayers - 1) / 2;
             OutputFile = $"Results - {NoOfPlayers} Players.txt";
         }
 
@@ -70,9 +71,8 @@ namespace ChessTournament
             return result;
         }
 
-        public static HashSet<HashSet<Match>> InitializeAllMatches()
+        public static HashSet<HashSet<Match>> InitializeAllMatches(List<Player> players)
         {
-            var players = InitializePlayers();
             var idList = GetPlayerIds(players);
             var result = new HashSet<HashSet<Match>>();
 

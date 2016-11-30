@@ -13,10 +13,12 @@ namespace ChessTournament
         private readonly HashSet<HashSet<Match>> _allMatches;
         private readonly bool[,] _isMatchPlayed;
         private readonly HashSet<Round> _rounds;
+        private readonly List<Player> _players;
 
         public Admin()
         {
-            _allMatches = ProblemDesc.InitializeAllMatches();
+            _players = ProblemDesc.InitializePlayers();
+            _allMatches = ProblemDesc.InitializeAllMatches(_players);
 
             _isMatchPlayed = Utility.InitializeRoundMatches(ProblemDesc.NoOfPlayers);
             _rounds = EstimateElapsedTime();
@@ -30,8 +32,7 @@ namespace ChessTournament
             RemainingGroup = GetRemainingGroup();
         }
 
-        internal List<Round> GetRounds
-            => _rounds.Where(aRound => aRound.Count == ProblemDesc.NoOfMatchesPerRound).ToList();
+        internal List<Round> GetRounds => _rounds.Where(aRound => aRound.Count == ProblemDesc.NoOfMatchesPerRound).ToList();
 
         internal string Summary { get; }
         internal List<Round> Rounds { get; }
@@ -49,7 +50,7 @@ namespace ChessTournament
             var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
             var group = Utility.FindGroup(_isMatchPlayed);
             foreach (var item in group)
-                sb.Append($"{item, 2} -> ");
+                sb.Append($"{item,2} -> ");
 
             return sb.AppendLine().ToString();
         }
@@ -106,7 +107,7 @@ namespace ChessTournament
             {
                 var aRound = rounds.ElementAt(roundNo);
                 var cost = aRound.Cost;
-                var content = $"R {roundNo + 1, 4}:\t{aRound, 2} [Cost:{cost, 4}]";
+                var content = $"R {roundNo + 1,4}:\t{aRound,2} [Cost:{cost,4}]";
 
                 result.AppendLine(content);
             }
