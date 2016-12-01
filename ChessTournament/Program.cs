@@ -15,7 +15,7 @@ namespace ChessTournament
                 //Console.Write("Enter No. of Rounds:\t");
                 //var noOfRounbds = Convert.ToInt32(Console.ReadLine());
 
-                var noOfPlayers = 24;
+                var noOfPlayers = 26;
                 var noOfRounds = 23;
 
                 var problemDesc = new ProblemDesc(noOfPlayers, noOfRounds);
