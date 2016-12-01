@@ -5,12 +5,15 @@ namespace ChessTournament
 {
 	public class Player : IComparer<Player>
 	{
+		/************************************************ Constructor ************************************************/
 		public Player(int id, int rank)
 		{
 			Id = id;
 			Rank = rank;
+			IsBusy = false;
 		}
 
+		/********************************************** Class Interface **********************************************/
 		internal int Id
 		{
 			get { return _id; }
@@ -37,8 +40,9 @@ namespace ChessTournament
 			}
 		}
 
-		public int Compare(Player x, Player y) => x.Id > y.Id ? 1 : 0;
+		internal bool IsBusy { get; set; }
 
+		public int Compare(Player x, Player y) => x.Id > y.Id ? 1 : 0;
 
 		/*********************************************** Private Fields **********************************************/
 		private int _id;

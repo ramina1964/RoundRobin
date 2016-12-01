@@ -72,7 +72,7 @@ namespace ChessTournament
             var sndLine = $"Possible Matches:\t{NoOfPossibleMatches,4}\t\tActual Matches:\t\t" +
                           $"{NoOfMatchesPlayed,4}\t\tElapsed Time(s):\t{ElapsedSeconds,5}";
 
-            var lastLine = $"Results are written to- a File called \"{OutputFile}\".";
+            var lastLine = $"Results are written to a File called \"{OutputFile}\".";
             var sb = new StringBuilder().AppendLine(title).AppendLine(fstLine).AppendLine(sndLine).AppendLine();
 
             if (outputMedium == OutputMedium.Screen)
@@ -142,12 +142,13 @@ namespace ChessTournament
             var rounds = new HashSet<Round>();
             for (var roundNo = 0; roundNo < NoOfRoundsDesired; roundNo++)
             {
-                var aRound = new Round(AllMatches);
+                var aRound = new Round(AllMatches, Players);
                 if (aRound.Count != NoOfMatchesPerRound)
                     break;
 
                 Utility.UpdatedMatches(aRound.GetMatches, IsMatchPlayed);
                 rounds.Add(aRound);
+                ResetPlayers();
             }
 
             return rounds;
@@ -161,5 +162,13 @@ namespace ChessTournament
         private HashSet<Round> TriedRounds { get; }
 
         private List<Player> Players { get; }
+
+        private void ResetPlayers()
+        {
+            foreach (var player in Players)
+            {
+                player.IsBusy = false;
+            }
+        }
     }
 }

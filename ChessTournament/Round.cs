@@ -8,8 +8,10 @@ namespace ChessTournament
     public class Round
     {
         /************************************************ Constructor ************************************************/
-        public Round(HashSet<HashSet<Match>> matches)
+        public Round(HashSet<HashSet<Match>> matches, List<Player> players)
         {
+            Players = players;
+            NoOfPlayers = Players.Count;
             Matches = SetupRound(matches);
 
             if (Matches.Count == ProblemDesc.NoOfMatchesPerRound)
@@ -18,6 +20,8 @@ namespace ChessTournament
 
         /********************************************** Class Interface **********************************************/
         internal int Cost { get; }
+
+        public int NoOfPlayers { get; }
 
         internal List<Match> GetMatches => Matches.ToList();
 
@@ -28,25 +32,53 @@ namespace ChessTournament
         public override string ToString() => Display();
 
         /*********************************************** Private Fields **********************************************/
+        private List<Player> Players { get; }
+
         private int RoundCost() => Matches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
 
-        private static Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId, bool[] isBusy)
+        //private static Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId, bool[] isBusy)
+        //{
+        //    var fstPlayerId = FindFreePlayer(isBusy);
+        //    if (fstPlayerId == null)
+        //        return null;
+
+        //    if (startSndId == null)
+        //        startSndId = fstPlayerId + 1;
+
+        //    var roundMatches = matches.ElementAt(fstPlayerId.Value);
+        //    foreach (var match in roundMatches)
+        //    {
+        //        if ( match.SndPlayerId < startSndId || isBusy[match.SndPlayerId] || match.IsPlayed)
+        //            continue;
+
+        //        isBusy[match.FstPLayerId] = true;
+        //        isBusy[match.SndPlayerId] = true;
+        //        match.IsPlayed = true;
+        //        return match;
+        //    }
+
+        //    return null;
+        //}
+
+
+        private Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId)
         {
-            var fstPlayerId = FindFreePlayerId(isBusy);
-            if (fstPlayerId == null)
+            var fstPlayer = FindFreePlayer(Players);
+
+            if (fstPlayer == null)
                 return null;
 
             if (startSndId == null)
-                startSndId = fstPlayerId + 1;
+                startSndId = fstPlayer.Id + 1;
 
-            var roundMatches = matches.ElementAt(fstPlayerId.Value);
+            var roundMatches = matches.ElementAt(fstPlayer.Id);
             foreach (var match in roundMatches)
             {
-                if ( match.SndPlayerId < startSndId || isBusy[match.SndPlayerId] || match.IsPlayed)
+                if ( match.SndPlayerId < startSndId || match.SndPlayer.IsBusy || match.IsPlayed)
                     continue;
 
-                isBusy[match.FstPLayerId] = true;
-                isBusy[match.SndPlayerId] = true;
+                match.FstPlayer.IsBusy = true;
+                match.SndPlayer.IsBusy = true;
                 match.IsPlayed = true;
                 return match;
             }
@@ -54,22 +86,21 @@ namespace ChessTournament
             return null;
         }
 
-        private static HashSet<Match> SetupRound(HashSet<HashSet<Match>> allMatches)
+        private HashSet<Match> SetupRound(HashSet<HashSet<Match>> allMatches)
         {
             var matches = new HashSet<Match>();
-            var isBusy = new bool[ProblemDesc.NoOfPlayers];
             int? startSndId = null;
             while (matches.Count < ProblemDesc.NoOfMatchesPerRound)
             {
-                var match = ChooseMatch(allMatches, startSndId, isBusy);
+                var match = ChooseMatch(allMatches, startSndId);
                 if (match == null && matches.Count == 0)
                     return matches;
 
                 if (match == null)
                 {
                     var lastMatch = matches.ElementAt(matches.Count - 1);
-                    isBusy[lastMatch.FstPLayerId] = false;
-                    isBusy[lastMatch.SndPlayerId] = false;
+                    lastMatch.FstPlayer.IsBusy = false;
+                    lastMatch.SndPlayer.IsBusy = false;
                     lastMatch.IsPlayed = false;
                     matches.Remove(lastMatch);
                     startSndId = lastMatch.SndPlayerId + 1;
@@ -95,18 +126,7 @@ namespace ChessTournament
             return sb.ToString();
         }
 
-        private static int? FindFreePlayerId(IReadOnlyList<bool> isPlayerBusy)
-        {
-            var noOfPlayers = isPlayerBusy.Count;
-            for (var id = 0; id < noOfPlayers; id++)
-            {
-                if (isPlayerBusy[id])
-                    continue;
-
-                return id;
-            }
-            return null;
-        }
+        private static Player FindFreePlayer(IEnumerable<Player> players) => players.FirstOrDefault(player => !player.IsBusy);
     }
 }
  
