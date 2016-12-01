@@ -36,31 +36,6 @@ namespace ChessTournament
 
         private int RoundCost() => Matches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
 
-        //private static Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId, bool[] isBusy)
-        //{
-        //    var fstPlayerId = FindFreePlayer(isBusy);
-        //    if (fstPlayerId == null)
-        //        return null;
-
-        //    if (startSndId == null)
-        //        startSndId = fstPlayerId + 1;
-
-        //    var roundMatches = matches.ElementAt(fstPlayerId.Value);
-        //    foreach (var match in roundMatches)
-        //    {
-        //        if ( match.SndPlayerId < startSndId || isBusy[match.SndPlayerId] || match.IsPlayed)
-        //            continue;
-
-        //        isBusy[match.FstPLayerId] = true;
-        //        isBusy[match.SndPlayerId] = true;
-        //        match.IsPlayed = true;
-        //        return match;
-        //    }
-
-        //    return null;
-        //}
-
-
         private Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId)
         {
             var fstPlayer = FindFreePlayer(Players);

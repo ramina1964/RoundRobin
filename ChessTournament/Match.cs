@@ -3,6 +3,7 @@ namespace ChessTournament
 {
     public class Match
     {
+        /************************************************ Constructor ************************************************/
         public Match(Player fstPlayer, Player sndPlayer)
         {
             FstPlayer = fstPlayer;
@@ -15,6 +16,7 @@ namespace ChessTournament
             IsPlayed = false;
         }
 
+        /********************************************** Class Interface **********************************************/
         public Player FstPlayer { get; set; }
 
         public Player SndPlayer { get; set; }

@@ -7,6 +7,7 @@ namespace ChessTournament
 {
     public class ProblemDesc
     {
+        /************************************************* Constants *************************************************/
         // Min and Max values for MaxNoOfPlayers
         public const int MaxNoOfPlayers = 26;
         public const int MinNoOfPlayers = 4;
@@ -15,37 +16,7 @@ namespace ChessTournament
         public const int MinNoOfRounds = 3;
         public static int MaxNoOfRounds { get; set; }
 
-        public static int NoOfPlayers
-        {
-            get { return _noOfPlayers; }
-
-            set
-            {
-                if (MinNoOfPlayers > value || value > MaxNoOfPlayers || value % 2 != 0)
-                    throw new ArgumentOutOfRangeException(nameof(NoOfPlayers), value,
-                        $"NoOfPlayers must be an even int in the interval [{MinNoOfPlayers}, {MaxNoOfPlayers}]");
-
-                _noOfPlayers = value;
-            }
-        }
-
-        public static int NoOfRoundsDesired
-        {
-            get { return _noOfRoundsDesired; }
-            set
-            {
-                if (MinNoOfRounds > value || value > MaxNoOfRounds)
-                    throw new ArgumentOutOfRangeException(nameof(NoOfRoundsDesired), value,
-                        $"NoOfRoundsDesired must be an int in the interval [{MinNoOfRounds}, {MaxNoOfRounds}]");
-
-                _noOfRoundsDesired = value;
-            }
-        }
-
-        public static int NoOfMatchesPerRound { get; set; }
-        public static string OutputFile { get; set; }
-        public static int NoOfPossibleMatches { get; set; }
-
+        /************************************************ Constructor ************************************************/
         public ProblemDesc(int noOfPlayers, int noOfRounds)
         {
             NoOfPlayers = noOfPlayers;
@@ -59,7 +30,39 @@ namespace ChessTournament
             OutputFile = $"Results - {NoOfPlayers} Players.txt";
         }
 
-        public static List<Player> InitializePlayers()
+        /********************************************** Class Interface **********************************************/
+        internal static int NoOfPlayers
+        {
+            get { return _noOfPlayers; }
+
+            set
+            {
+                if (MinNoOfPlayers > value || value > MaxNoOfPlayers || value % 2 != 0)
+                    throw new ArgumentOutOfRangeException(nameof(NoOfPlayers), value,
+                        $"NoOfPlayers must be an even int in the interval [{MinNoOfPlayers}, {MaxNoOfPlayers}]");
+
+                _noOfPlayers = value;
+            }
+        }
+
+        internal static int NoOfRoundsDesired
+        {
+            get { return _noOfRoundsDesired; }
+            set
+            {
+                if (MinNoOfRounds > value || value > MaxNoOfRounds)
+                    throw new ArgumentOutOfRangeException(nameof(NoOfRoundsDesired), value,
+                        $"NoOfRoundsDesired must be an int in the interval [{MinNoOfRounds}, {MaxNoOfRounds}]");
+
+                _noOfRoundsDesired = value;
+            }
+        }
+
+        internal static int NoOfMatchesPerRound { get; set; }
+        internal static string OutputFile { get; set; }
+        internal static int NoOfPossibleMatches { get; set; }
+
+        internal static List<Player> InitializePlayers()
         {
             var result = new List<Player>(NoOfPlayers);
             for (var i = 0; i < NoOfPlayers; i++)
@@ -71,7 +74,7 @@ namespace ChessTournament
             return result;
         }
 
-        public static HashSet<HashSet<Match>> InitializeAllMatches(List<Player> players)
+        internal static HashSet<HashSet<Match>> InitializeAllMatches(List<Player> players)
         {
             var idList = GetPlayerIds(players);
             var result = new HashSet<HashSet<Match>>();
@@ -101,6 +104,7 @@ namespace ChessTournament
             return result;
         }
 
+        /*************************************************** Private Fields ****************************************************/
         private static IList<int> GetPlayerIds(IEnumerable<Player> players)
         {
             return players.Select(item => item.Id).ToList();

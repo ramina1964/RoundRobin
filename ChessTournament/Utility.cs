@@ -5,8 +5,7 @@ namespace ChessTournament
 {
     public class Utility
     {
-        private static readonly int NoOfPlayers = ProblemDesc.NoOfPlayers;
-
+        /********************************************** Class Interface **********************************************/
         internal static bool[,] InitializeRoundMatches(int noOfPlayers)
         {
             var isMatchPlayed = new bool[noOfPlayers, noOfPlayers];
@@ -57,6 +56,10 @@ namespace ChessTournament
                     return results;
             }
         }
+
+        /*********************************************** Private Fields **********************************************/
+        private static readonly int NoOfPlayers = ProblemDesc.NoOfPlayers;
+
 
     }
 }

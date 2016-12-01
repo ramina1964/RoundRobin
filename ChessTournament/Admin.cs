@@ -10,7 +10,7 @@ namespace ChessTournament
 {
     public class Admin
     {
-        /***************************************************** Constructors *****************************************/
+        /************************************************ Constructors ***********************************************/
         public Admin()
         {
             NoOfPlayers = ProblemDesc.NoOfPlayers;
