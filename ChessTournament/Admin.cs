@@ -14,6 +14,7 @@ namespace ChessTournament
         public Admin()
         {
             NoOfPlayers = ProblemDesc.NoOfPlayers;
+            MaxNoOfRounds = ProblemDesc.MaxNoOfRounds;
             NoOfRoundsDesired = ProblemDesc.NoOfRoundsDesired;
             NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
             NoOfPossibleMatches = ProblemDesc.NoOfPossibleMatches;
@@ -34,11 +35,14 @@ namespace ChessTournament
             ScreenSummary = GetSummary(OutputMedium.Screen);
         }
 
-        internal List<Round> GetCompletedRounds => TriedRounds.Where(aRound => aRound.Count == NoOfMatchesPerRound).ToList();
-
+        /********************************************** Class Interface **********************************************/
         internal int NoOfPlayers { get; }
 
         internal int NoOfRoundsDesired { get; }
+
+        internal int MaxNoOfRounds { get; }
+
+        internal List<Round> GetCompletedRounds => TriedRounds.Where(aRound => aRound.Count == NoOfMatchesPerRound).ToList();
 
         internal int NoOfMatchesPerRound { get; }
 
@@ -84,28 +88,16 @@ namespace ChessTournament
         }
 
         /*************************************************** Private Methds ****************************************************/
-        //private string GetRemainingGroup()
-        //{
-        //    if (NoOfActualRounds == ProblemDesc.MaxNoOfRounds)
-        //        return Empty;
-
-        //    var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
-        //    var group = Utility.FindGroup(IsMatchPlayed);
-        //    foreach (var item in group)
-        //        sb.Append($"{item,2} -> ");
-
-        //    return sb.AppendLine().ToString();
-        //}
 
         private string GetRemainingGroup()
         {
-            if (NoOfActualRounds == ProblemDesc.MaxNoOfRounds)
+            if (NoOfActualRounds == MaxNoOfRounds)
                 return Empty;
 
             var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
-            // var group = Utility.FindGroup(IsMatchPlayed);
-            //foreach (var item in group)
-            //    sb.Append($"{item,2} -> ");
+            var group = Utility.FindGroup(AllMatches, Players);
+            foreach (var item in group)
+                sb.Append($"{item,2} -> ");
 
             return sb.AppendLine().ToString();
         }

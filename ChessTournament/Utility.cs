@@ -35,28 +35,28 @@ namespace ChessTournament
             return result;
         }
 
-        //internal static IEnumerable<int> FindGroup(bool[,] isPlayed)
-        //{
-        //    const int startId = 0;
-        //    var idx = startId;
+        internal static IEnumerable<Player> FindGroup(HashSet<HashSet<Match>> matches, List<Player> players)
+        {
+            var startPlayer = players[0];
+            var player = startPlayer;
 
-        //    var results = new List<int> { startId };
-        //    while (true)
-        //    {
-        //        var partners = FindPlayersToMeet(idx, isPlayed);
-        //        var found = false;
-        //        foreach (var id in partners.Where(player => !results.Contains(player)))
-        //        {
-        //            results.Add(id);
-        //            idx = id;
-        //            found = true;
-        //            break;
-        //        }
+            var results = new List<Player> { startPlayer };
+            while (true)
+            {
+                var partners = FindPlayersToMeet(player.Id, matches);
+                var found = false;
+                foreach (var item in partners.Where(p => !results.Contains(p)))
+                {
+                    results.Add(item);
+                    player = item;
+                    found = true;
+                    break;
+                }
 
-        //        if (!found)
-        //            return results;
-        //    }
-        //}
+                if (!found)
+                    return results;
+            }
+        }
 
     }
 }
