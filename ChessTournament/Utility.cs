@@ -30,7 +30,7 @@ namespace ChessTournament
         internal static List<Player> FindPlayersToMeet(int id, HashSet<HashSet<Match>> matches)
         {
             var result = new List<Player>(NoOfPlayers - 1);
-            result.AddRange( from match in matches.ElementAt(id) where !match.IsPlayed select match.SndPlayer );
+            result.AddRange(from match in matches.ElementAt(id) where !match.IsPlayed select match.SndPlayer);
 
             return result;
         }

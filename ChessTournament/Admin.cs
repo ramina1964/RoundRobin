@@ -110,7 +110,6 @@ namespace ChessTournament
             WriteAllText(OutputFile, content);
         }
 
-
         private string DisplayRounds(IReadOnlyCollection<Round> rounds, string summary, string remainingGroup)
         {
             var result = new StringBuilder().AppendLine(summary);
@@ -156,7 +155,9 @@ namespace ChessTournament
 
         /*************************************************** Private Fields ****************************************************/
         private HashSet<HashSet<Match>> AllMatches { get; }
+
         private bool[,] IsMatchPlayed { get; }
+
         private HashSet<Round> TriedRounds { get; }
 
         private List<Player> Players { get; }
