@@ -6,23 +6,6 @@ namespace ChessTournament
     public class Utility
     {
         /********************************************** Class Interface **********************************************/
-        //internal static bool[,] InitializeRoundMatches(int noOfPlayers)
-        //{
-        //    var isMatchPlayed = new bool[noOfPlayers, noOfPlayers];
-        //    for (var i = 0; i < noOfPlayers; i++)
-        //        isMatchPlayed[i, i] = true;
-
-        //    return isMatchPlayed;
-        //}
-
-        //internal static void UpdatedMatches(IEnumerable<Match> playedMatches, bool[,] isMatchPlayed)
-        //{
-        //    foreach (var match in playedMatches.ToList())
-        //    {
-        //        isMatchPlayed[match.FstPLayerId, match.SndPlayerId] = true;
-        //        isMatchPlayed[match.SndPlayerId, match.FstPLayerId] = true;
-        //    }
-        //}
 
         internal static Player FindPlayer(List<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
