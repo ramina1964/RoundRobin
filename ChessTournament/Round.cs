@@ -12,9 +12,10 @@ namespace ChessTournament
         {
             Players = players;
             NoOfPlayers = Players.Count;
-            Matches = SetupRound(matches);
+            NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
 
-            if (Matches.Count == ProblemDesc.NoOfMatchesPerRound)
+            Matches = SetupRound(matches);
+            if (Matches.Count == NoOfMatchesPerRound)
                 Cost = RoundCost();
         }
 
@@ -22,6 +23,8 @@ namespace ChessTournament
         internal int Cost { get; }
 
         public int NoOfPlayers { get; }
+
+        public int NoOfMatchesPerRound { get; }
 
         internal List<Match> GetMatches => Matches.ToList();
 
@@ -65,7 +68,7 @@ namespace ChessTournament
         {
             var matches = new HashSet<Match>();
             int? startSndId = null;
-            while (matches.Count < ProblemDesc.NoOfMatchesPerRound)
+            while (matches.Count < NoOfMatchesPerRound)
             {
                 var match = ChooseMatch(allMatches, startSndId);
                 if (match == null && matches.Count == 0)
