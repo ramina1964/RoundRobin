@@ -23,7 +23,7 @@ namespace ChessTournament
             Players = ProblemDesc.InitializePlayers();
             AllMatches = ProblemDesc.InitializeAllMatches(Players);
 
-            IsMatchPlayed = Utility.InitializeRoundMatches(NoOfPlayers);
+            //IsMatchPlayed = Utility.InitializeRoundMatches(NoOfPlayers);
             TriedRounds = EstimateElapsedTime();
             Rounds = GetCompletedRounds;
             IsDesiredNoOfRoundsMet = Rounds.Count == NoOfRoundsDesired;
@@ -61,7 +61,7 @@ namespace ChessTournament
         internal int NoOfMatchesPlayed { get; }
 
         internal int ElapsedSeconds { get; set; }
-        
+
         internal string GetSummary(OutputMedium outputMedium)
         {
             var title = $"Summary of the Results\t\t\t@{DateTime.Now}";
@@ -97,7 +97,7 @@ namespace ChessTournament
             var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
             var group = Utility.FindGroup(AllMatches, Players);
             foreach (var item in group)
-                sb.Append($"{item.Id, 2} -> ");
+                sb.Append($"{item.Id,2} -> ");
 
             return sb.AppendLine().ToString();
         }
@@ -146,7 +146,7 @@ namespace ChessTournament
                 if (aRound.Count != NoOfMatchesPerRound)
                     break;
 
-                Utility.UpdatedMatches(aRound.GetMatches, IsMatchPlayed);
+                //Utility.UpdatedMatches(aRound.GetMatches, IsMatchPlayed);
                 rounds.Add(aRound);
                 ResetPlayers();
             }
@@ -157,7 +157,7 @@ namespace ChessTournament
         /*************************************************** Private Fields ****************************************************/
         private HashSet<HashSet<Match>> AllMatches { get; }
 
-        private bool[,] IsMatchPlayed { get; }
+        //private bool[,] IsMatchPlayed { get; }
 
         private HashSet<Round> TriedRounds { get; }
 
