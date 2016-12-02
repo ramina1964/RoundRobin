@@ -146,7 +146,6 @@ namespace ChessTournament
                 if (aRound.Count != NoOfMatchesPerRound)
                     break;
 
-                //Utility.UpdatedMatches(aRound.GetMatches, IsMatchPlayed);
                 rounds.Add(aRound);
                 ResetPlayers();
             }
