@@ -97,7 +97,7 @@ namespace ChessTournament
             var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
             var group = Utility.FindGroup(AllMatches, Players);
             foreach (var item in group)
-                sb.Append($"{item,2} -> ");
+                sb.Append($"{item.Id, 2} -> ");
 
             return sb.AppendLine().ToString();
         }
