@@ -17,7 +17,7 @@ namespace ChessTournament
 
             RoundMatches = SetupRound();
             if (RoundMatches.Count == NoOfMatchesPerRound)
-                Cost = RoundCost();
+                Cost = RoundCost;
         }
 
 
@@ -39,10 +39,12 @@ namespace ChessTournament
         /*********************************************** Private Fields **********************************************/
         private List<Player> Players { get; }
 
-        private int RoundCost() => RoundMatches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
+        private int RoundCost => RoundMatches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
 
         private HashSet<HashSet<Match>> AllMatches { get; }
 
+
+        /*********************************************** Private Fields **********************************************/
         private Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId)
         {
             var fstPlayer = FindFreePlayer(Players);
@@ -95,7 +97,6 @@ namespace ChessTournament
             }
             return matches;
         }
-
 
         private HashSet<Match> RoundMatches { get; }
 
