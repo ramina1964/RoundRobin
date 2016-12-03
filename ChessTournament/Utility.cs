@@ -51,8 +51,8 @@ namespace ChessTournament
             var innerList = new HashSet<Match>();
             foreach (var item in comb)
             {
-                var p1 = Utility.FindPlayer(players, item[0]);
-                var p2 = Utility.FindPlayer(players, item[1]);
+                var p1 = FindPlayer(players, item[0]);
+                var p2 = FindPlayer(players, item[1]);
                 var match = new Match(p1, p2);
                 if (p2.Id - p1.Id == 1)
                 {
