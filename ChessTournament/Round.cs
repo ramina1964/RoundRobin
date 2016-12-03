@@ -44,6 +44,7 @@ namespace ChessTournament
         private Match ChooseMatch(int? startSndId)
         {
             var fstPlayer = FindFreePlayer();
+            var round = Players.IndexOf(fstPlayer);
 
             if (fstPlayer == null)
                 return null;
@@ -51,10 +52,10 @@ namespace ChessTournament
             if (startSndId == null)
                 startSndId = fstPlayer.Id + 1;
 
-            var roundMatches = AllMatches.ElementAt(fstPlayer.Id);
+            var roundMatches = AllMatches.ElementAt(round);
             foreach (var match in roundMatches)
             {
-                if ( match.SndPlayerId < startSndId || match.SndPlayer.IsBusy || match.IsPlayed)
+                if (match.SndPlayerId < startSndId || match.SndPlayer.IsBusy || match.IsPlayed)
                     continue;
 
                 match.FstPlayer.IsBusy = true;
@@ -108,4 +109,3 @@ namespace ChessTournament
         private Player FindFreePlayer() => Players.FirstOrDefault(player => !player.IsBusy);
     }
 }
- 

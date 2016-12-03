@@ -67,7 +67,7 @@ namespace ChessTournament
             var result = new List<Player>(NoOfPlayers);
             for (var i = 0; i < NoOfPlayers; i++)
             {
-                var p = new Player(i, i + 1);
+                var p = new Player(i + 1, i + 1);
                 result.Insert(i, p);
             }
 
@@ -91,7 +91,7 @@ namespace ChessTournament
                 {
                     if (innerList.Count > 0)
                     { result.Add(innerList); }
-                    innerList = new HashSet<Match>() {match};
+                    innerList = new HashSet<Match>() { match };
                     continue;
                 }
 

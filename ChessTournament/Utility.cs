@@ -9,33 +9,36 @@ namespace ChessTournament
 
         internal static Player FindPlayer(List<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
-        internal static List<Player> FindPlayersToMeet(int id, HashSet<HashSet<Match>> matches)
+        private static Player FindPlayerToMeet(HashSet<HashSet<Match>> allMatches, List<Player> players, int id)
         {
-            var result = new List<Player>(NoOfPlayers - 1);
-            result.AddRange(from match in matches.ElementAt(id) where !match.IsPlayed select match.SndPlayer);
+            var player = FindPlayer(players, id);
+            var index = players.IndexOf(player);
 
-            return result;
+            for (var j = 0; j < allMatches.ElementAt(index).Count; j++)
+            {
+                if (allMatches.ElementAt(index).ElementAt(j).FstPLayerId == id &&
+                    !allMatches.ElementAt(index).ElementAt(j).IsPlayed)
+                    return allMatches.ElementAt(index).ElementAt(j).SndPlayer;
+            }
+
+            return null;
         }
+
 
         internal static IEnumerable<Player> FindGroup(HashSet<HashSet<Match>> matches, List<Player> players)
         {
-            var startPlayer = players[0];
-            var player = startPlayer;
-
-            var results = new List<Player> { startPlayer };
+            var player = players[0];
+            var results = new List<Player> { player };
             while (true)
             {
-                var partners = FindPlayersToMeet(player.Id, matches);
-                var found = false;
-                foreach (var item in partners.Where(p => !results.Contains(p)))
+                var partner = FindPlayerToMeet(matches, players, player.Id);
+                if (partner != null && !results.Contains(partner))
                 {
-                    results.Add(item);
-                    player = item;
-                    found = true;
-                    break;
+                    results.Add(partner);
+                    player = partner;
                 }
 
-                if (!found)
+                if (partner == null)
                     return results;
             }
         }

@@ -17,9 +17,9 @@ namespace ChessTournament
         }
 
         /********************************************** Class Interface **********************************************/
-        public Player FstPlayer { get; set; }
+        public Player FstPlayer { get; }
 
-        public Player SndPlayer { get; set; }
+        public Player SndPlayer { get; }
 
         public int FstPLayerId { get; }
 

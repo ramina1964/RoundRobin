@@ -23,7 +23,6 @@ namespace ChessTournament
             Players = ProblemDesc.InitializePlayers();
             AllMatches = ProblemDesc.InitializeAllMatches(Players);
 
-            //IsMatchPlayed = Utility.InitializeRoundMatches(NoOfPlayers);
             TriedRounds = EstimateElapsedTime();
             Rounds = GetCompletedRounds;
             IsDesiredNoOfRoundsMet = Rounds.Count == NoOfRoundsDesired;
@@ -88,7 +87,6 @@ namespace ChessTournament
         }
 
         /*************************************************** Private Methds ****************************************************/
-
         private string GetRemainingGroup()
         {
             if (NoOfActualRounds == MaxNoOfRounds)
@@ -155,8 +153,6 @@ namespace ChessTournament
 
         /*************************************************** Private Fields ****************************************************/
         private HashSet<HashSet<Match>> AllMatches { get; }
-
-        //private bool[,] IsMatchPlayed { get; }
 
         private HashSet<Round> TriedRounds { get; }
 
