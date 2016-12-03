@@ -20,15 +20,12 @@ namespace ChessTournament
                 Cost = RoundCost;
         }
 
-
         /********************************************** Class Interface **********************************************/
         internal int Cost { get; }
 
         public int NoOfPlayers { get; }
 
         public int NoOfMatchesPerRound { get; }
-
-        //internal List<Match> GetMatches => RoundMatches.ToList();
 
         internal int Count => RoundMatches.Count;
 
@@ -43,11 +40,10 @@ namespace ChessTournament
 
         private HashSet<HashSet<Match>> AllMatches { get; }
 
-
         /*********************************************** Private Fields **********************************************/
         private Match ChooseMatch(int? startSndId)
         {
-            var fstPlayer = FindFreePlayer(Players);
+            var fstPlayer = FindFreePlayer();
 
             if (fstPlayer == null)
                 return null;
@@ -109,7 +105,7 @@ namespace ChessTournament
             return sb.ToString();
         }
 
-        private static Player FindFreePlayer(IEnumerable<Player> players) => players.FirstOrDefault(player => !player.IsBusy);
+        private Player FindFreePlayer() => Players.FirstOrDefault(player => !player.IsBusy);
     }
 }
  
