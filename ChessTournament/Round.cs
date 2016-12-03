@@ -45,7 +45,7 @@ namespace ChessTournament
 
 
         /*********************************************** Private Fields **********************************************/
-        private Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId)
+        private Match ChooseMatch(int? startSndId)
         {
             var fstPlayer = FindFreePlayer(Players);
 
@@ -55,7 +55,7 @@ namespace ChessTournament
             if (startSndId == null)
                 startSndId = fstPlayer.Id + 1;
 
-            var roundMatches = matches.ElementAt(fstPlayer.Id);
+            var roundMatches = AllMatches.ElementAt(fstPlayer.Id);
             foreach (var match in roundMatches)
             {
                 if ( match.SndPlayerId < startSndId || match.SndPlayer.IsBusy || match.IsPlayed)
@@ -76,7 +76,7 @@ namespace ChessTournament
             int? startSndId = null;
             while (matches.Count < NoOfMatchesPerRound)
             {
-                var match = ChooseMatch(AllMatches, startSndId);
+                var match = ChooseMatch(startSndId);
                 if (match == null && matches.Count == 0)
                     return matches;
 
