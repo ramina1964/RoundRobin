@@ -20,8 +20,8 @@ namespace ChessTournament
             NoOfPossibleMatches = ProblemDesc.NoOfPossibleMatches;
             OutputFile = ProblemDesc.OutputFile;
 
-            Players = ProblemDesc.InitializePlayers();
-            AllMatches = ProblemDesc.InitializeAllMatches(Players);
+            Players = Utility.InitializePlayers();
+            AllMatches = Utility.InitializeAllMatches(Players);
 
             TriedRounds = EstimateElapsedTime();
             Rounds = GetCompletedRounds;

@@ -62,54 +62,7 @@ namespace ChessTournament
         internal static string OutputFile { get; set; }
         internal static int NoOfPossibleMatches { get; set; }
 
-        internal static List<Player> InitializePlayers()
-        {
-            var result = new List<Player>(NoOfPlayers);
-            for (var i = 0; i < NoOfPlayers; i++)
-            {
-                var p = new Player(i + 1, i + 1);
-                result.Insert(i, p);
-            }
-
-            return result;
-        }
-
-        internal static HashSet<HashSet<Match>> InitializeAllMatches(List<Player> players)
-        {
-            var idList = GetPlayerIds(players);
-            var result = new HashSet<HashSet<Match>>();
-
-            var comb = new Combinations<int>(idList, 2).ToList();
-
-            var innerList = new HashSet<Match>();
-            foreach (var item in comb)
-            {
-                var p1 = Utility.FindPlayer(players, item[0]);
-                var p2 = Utility.FindPlayer(players, item[1]);
-                var match = new Match(p1, p2);
-                if (p2.Id - p1.Id == 1)
-                {
-                    if (innerList.Count > 0)
-                    { result.Add(innerList); }
-                    innerList = new HashSet<Match>() { match };
-                    continue;
-                }
-
-                innerList.Add(match);
-                if (p2.Id - p1.Id == 1)
-                { result.Add(innerList); }
-            }
-
-            result.Add(innerList);
-            return result;
-        }
-
         /*************************************************** Private Fields ****************************************************/
-        private static IList<int> GetPlayerIds(IEnumerable<Player> players)
-        {
-            return players.Select(item => item.Id).ToList();
-        }
-
         private static int _noOfPlayers;
         private static int _noOfRoundsDesired;
     }
