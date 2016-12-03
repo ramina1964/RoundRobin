@@ -13,11 +13,13 @@ namespace ChessTournament
             Players = players;
             NoOfPlayers = Players.Count;
             NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
+            AllMatches = matches;
 
-            Matches = SetupRound(matches);
-            if (Matches.Count == NoOfMatchesPerRound)
+            RoundMatches = SetupRound();
+            if (RoundMatches.Count == NoOfMatchesPerRound)
                 Cost = RoundCost();
         }
+
 
         /********************************************** Class Interface **********************************************/
         internal int Cost { get; }
@@ -26,18 +28,20 @@ namespace ChessTournament
 
         public int NoOfMatchesPerRound { get; }
 
-        internal List<Match> GetMatches => Matches.ToList();
+        //internal List<Match> GetMatches => RoundMatches.ToList();
 
-        internal int Count => Matches.Count;
+        internal int Count => RoundMatches.Count;
 
-        internal bool IsEmpty => Matches.Count == 0;
+        internal bool IsEmpty => RoundMatches.Count == 0;
 
         public override string ToString() => Display();
 
         /*********************************************** Private Fields **********************************************/
         private List<Player> Players { get; }
 
-        private int RoundCost() => Matches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
+        private int RoundCost() => RoundMatches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
+
+        private HashSet<HashSet<Match>> AllMatches { get; }
 
         private Match ChooseMatch(IEnumerable<HashSet<Match>> matches, int? startSndId)
         {
@@ -64,13 +68,13 @@ namespace ChessTournament
             return null;
         }
 
-        private HashSet<Match> SetupRound(HashSet<HashSet<Match>> allMatches)
+        private HashSet<Match> SetupRound()
         {
             var matches = new HashSet<Match>();
             int? startSndId = null;
             while (matches.Count < NoOfMatchesPerRound)
             {
-                var match = ChooseMatch(allMatches, startSndId);
+                var match = ChooseMatch(AllMatches, startSndId);
                 if (match == null && matches.Count == 0)
                     return matches;
 
@@ -93,12 +97,12 @@ namespace ChessTournament
         }
 
 
-        private HashSet<Match> Matches { get; }
+        private HashSet<Match> RoundMatches { get; }
 
         private string Display()
         {
             var sb = new StringBuilder();
-            foreach (var aMatch in Matches)
+            foreach (var aMatch in RoundMatches)
                 sb.Append($"{aMatch}  ");
 
             return sb.ToString();
