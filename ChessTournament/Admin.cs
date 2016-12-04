@@ -95,7 +95,7 @@ namespace ChessTournament
             var sb = new StringBuilder().Append("Remaining Group:").AppendLine();
             var group = Utility.FindGroup(AllMatches, Players);
             foreach (var item in group)
-                sb.Append($"{item.Id,2} -> ");
+                sb.Append($"{item.Id,3} -> ");
 
             return sb.AppendLine().ToString();
         }
@@ -115,7 +115,7 @@ namespace ChessTournament
             {
                 var aRound = rounds.ElementAt(roundNo);
                 var cost = aRound.Cost;
-                var content = $"R {roundNo + 1,4}:\t{aRound,2} [Cost:{cost,4}]";
+                var content = $"R {roundNo + 1,4}:\t{aRound,3} [Cost:{cost,4}]";
 
                 result.AppendLine(content);
             }

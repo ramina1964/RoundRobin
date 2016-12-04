@@ -7,6 +7,9 @@ namespace ChessTournament
     public class Utility
     {
         /********************************************** Class Interface **********************************************/
+        internal const int IdStep = 1;
+
+        internal const int StartPlayerId = 1;
 
         internal static Player FindPlayer(List<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
@@ -34,7 +37,8 @@ namespace ChessTournament
             var result = new List<Player>(noOfPlayers);
             for (var i = 0; i < noOfPlayers; i++)
             {
-                var p = new Player(i + 1, i + 1);
+                var index = StartPlayerId + i * IdStep;
+                var p = new Player(index, i + 1);
                 result.Insert(i, p);
             }
 
@@ -54,7 +58,7 @@ namespace ChessTournament
                 var p1 = FindPlayer(players, item[0]);
                 var p2 = FindPlayer(players, item[1]);
                 var match = new Match(p1, p2);
-                if (p2.Id - p1.Id == 1)
+                if (p2.Id - p1.Id == IdStep)
                 {
                     if (innerList.Count > 0)
                     { result.Add(innerList); }
@@ -63,7 +67,7 @@ namespace ChessTournament
                 }
 
                 innerList.Add(match);
-                if (p2.Id - p1.Id == 1)
+                if (p2.Id - p1.Id == IdStep)
                 { result.Add(innerList); }
             }
 

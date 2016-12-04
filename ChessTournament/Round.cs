@@ -21,6 +21,7 @@ namespace ChessTournament
         }
 
         /********************************************** Class Interface **********************************************/
+
         internal int Cost { get; }
 
         public int NoOfPlayers { get; }
@@ -50,7 +51,7 @@ namespace ChessTournament
                 return null;
 
             if (startSndId == null)
-                startSndId = fstPlayer.Id + 1;
+                startSndId = fstPlayer.Id + IdStep;
 
             var roundMatches = AllMatches.ElementAt(round);
             foreach (var match in roundMatches)
@@ -84,11 +85,10 @@ namespace ChessTournament
                     lastMatch.SndPlayer.IsBusy = false;
                     lastMatch.IsPlayed = false;
                     matches.Remove(lastMatch);
-                    startSndId = lastMatch.SndPlayerId + 1;
+                    startSndId = lastMatch.SndPlayerId + IdStep;
                     continue;
                 }
 
-                match.IsPlayed = true;
                 matches.Add(match);
                 startSndId = null;
             }
@@ -107,5 +107,8 @@ namespace ChessTournament
         }
 
         private Player FindFreePlayer() => Players.FirstOrDefault(player => !player.IsBusy);
+
+        private static readonly int IdStep = Utility.IdStep;
+
     }
 }

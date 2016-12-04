@@ -33,7 +33,7 @@ namespace ChessTournament
 
         public override string ToString()
         {
-            return $"({FstPLayerId, 2}, {SndPlayerId, 2})";
+            return $"({FstPLayerId, 3}, {SndPlayerId, 3})";
         }
     }
 }
