@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ChessTournament
 {
-	public class Player : IComparer<Player>
+    internal class Player : IComparer<Player>
 	{
-		/************************************************ Constructor ************************************************/
-		public Player(int id, int rank)
+        /************************************************ Constructor ************************************************/
+        internal Player(int id, int rank)
 		{
 			Id = id;
 			Rank = rank;

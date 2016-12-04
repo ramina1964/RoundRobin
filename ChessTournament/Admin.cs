@@ -8,10 +8,10 @@ using static System.String;
 
 namespace ChessTournament
 {
-    public class Admin
+    internal class Admin
     {
         /************************************************ Constructors ***********************************************/
-        public Admin()
+        internal Admin()
         {
             NoOfPlayers = ProblemDesc.NoOfPlayers;
             MaxNoOfRounds = ProblemDesc.MaxNoOfRounds;

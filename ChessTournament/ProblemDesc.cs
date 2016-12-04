@@ -2,19 +2,19 @@
 
 namespace ChessTournament
 {
-    public class ProblemDesc
+    internal class ProblemDesc
     {
         /************************************************* Constants *************************************************/
         // Min and Max values for MaxNoOfPlayers
-        public const int MaxNoOfPlayers = 26;
-        public const int MinNoOfPlayers = 4;
+        internal const int MaxNoOfPlayers = 26;
+        internal const int MinNoOfPlayers = 4;
 
         // Min and Max values for NoOfRounds
-        public const int MinNoOfRounds = 3;
-        public static int MaxNoOfRounds { get; set; }
+        internal const int MinNoOfRounds = 3;
+        internal static int MaxNoOfRounds { get; set; }
 
         /************************************************ Constructor ************************************************/
-        public ProblemDesc(int noOfPlayers, int noOfRounds)
+        internal ProblemDesc(int noOfPlayers, int noOfRounds)
         {
             NoOfPlayers = noOfPlayers;
             MaxNoOfRounds = NoOfPlayers - 1;

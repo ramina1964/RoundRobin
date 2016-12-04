@@ -5,10 +5,10 @@ using System.Text;
 
 namespace ChessTournament
 {
-    public class Round
+    internal class Round
     {
         /************************************************ Constructor ************************************************/
-        public Round(HashSet<HashSet<Match>> matches, List<Player> players)
+        internal Round(HashSet<HashSet<Match>> matches, List<Player> players)
         {
             Players = players;
             NoOfPlayers = Players.Count;
@@ -108,7 +108,6 @@ namespace ChessTournament
 
         private Player FindFreePlayer() => Players.FirstOrDefault(player => !player.IsBusy);
 
-        private static readonly int IdStep = Utility.IdStep;
-
+        private const int IdStep = Utility.IdStep;
     }
 }

@@ -1,10 +1,10 @@
 ﻿
 namespace ChessTournament
 {
-    public class Match
+    internal class Match
     {
         /************************************************ Constructor ************************************************/
-        public Match(Player fstPlayer, Player sndPlayer)
+        internal Match(Player fstPlayer, Player sndPlayer)
         {
             FstPlayer = fstPlayer;
             SndPlayer = sndPlayer;
@@ -17,19 +17,19 @@ namespace ChessTournament
         }
 
         /********************************************** Class Interface **********************************************/
-        public Player FstPlayer { get; }
+        internal Player FstPlayer { get; }
 
-        public Player SndPlayer { get; }
+        internal Player SndPlayer { get; }
 
-        public int FstPLayerId { get; }
+        internal int FstPLayerId { get; }
 
-        public int SndPlayerId { get; }
+        internal int SndPlayerId { get; }
 
-        public int FstPlayerRank { get; }
+        internal int FstPlayerRank { get; }
 
-        public int SndPlayerRank { get; }
+        internal int SndPlayerRank { get; }
 
-        public bool IsPlayed { get; set; }
+        internal bool IsPlayed { get; set; }
 
         public override string ToString()
         {
