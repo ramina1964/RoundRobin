@@ -158,12 +158,6 @@ namespace ChessTournament
 
         private List<Player> Players { get; }
 
-        private void ResetPlayers()
-        {
-            foreach (var player in Players)
-            {
-                player.IsBusy = false;
-            }
-        }
+        private void ResetPlayers() => Players.ForEach(p => p.IsBusy = false);
     }
 }
