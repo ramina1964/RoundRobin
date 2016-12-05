@@ -45,7 +45,9 @@ namespace ChessTournament
         private Match ChooseMatch(int? startSndId)
         {
             var fstPlayer = FindFreePlayer();
+
             var round = Players.IndexOf(fstPlayer);
+            var roundMatches = AllMatches.ElementAt(round);
 
             if (fstPlayer == null)
                 return null;
@@ -53,7 +55,7 @@ namespace ChessTournament
             if (startSndId == null)
                 startSndId = fstPlayer.Id + IdStep;
 
-            var roundMatches = AllMatches.ElementAt(round);
+
             foreach (var match in roundMatches)
             {
                 if (match.SndPlayerId < startSndId || match.SndPlayer.IsBusy || match.IsPlayed)
