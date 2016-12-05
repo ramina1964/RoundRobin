@@ -49,13 +49,13 @@ namespace ChessTournament
             var idList = GetPlayerIds(players);
             var result = new HashSet<HashSet<Match>>();
 
-            var comb = new Combinations<int>(idList, 2).ToList();
+            var combinations = new Combinations<int>(idList, 2).ToList();
 
             var innerList = new HashSet<Match>();
-            foreach (var item in comb)
+            foreach (var comb in combinations)
             {
-                var p1 = FindPlayer(players, item[0]);
-                var p2 = FindPlayer(players, item[1]);
+                var p1 = FindPlayer(players, comb[0]);
+                var p2 = FindPlayer(players, comb[1]);
                 var match = new Match(p1, p2);
                 if (p2.Id - p1.Id == IdStep)
                 {
