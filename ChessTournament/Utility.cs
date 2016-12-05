@@ -72,14 +72,19 @@ namespace ChessTournament
             return result;
         }
 
+        internal static HashSet<Match> PlayerMatches(IEnumerable<HashSet<Match>> allMatches, List<Player> players, Player player)
+        {
+            var roundIndex = players.IndexOf(player);
+            return allMatches.ElementAt(roundIndex);
+        }
+
         /*********************************************** Private Fields **********************************************/
         private static IList<int> GetPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 
         private static Player FindPlayerToMeet(IEnumerable<HashSet<Match>> allMatches, List<Player> players, int id)
         {
             var player = FindPlayer(players, id);
-            var index = players.IndexOf(player);
-            var playerMatches = allMatches.ElementAt(index);
+            var playerMatches = PlayerMatches(allMatches, players, player);
 
             return (from match in playerMatches
                     where match.FstPLayerId == id && !match.IsPlayed
