@@ -33,9 +33,8 @@ namespace ChessTournament
 
         internal static List<Player> InitializePlayers()
         {
-            var noOfPlayers = ProblemDesc.NoOfPlayers;
-            var result = new List<Player>(noOfPlayers);
-            for (var i = 0; i < noOfPlayers; i++)
+            var result = new List<Player>(NoOfPlayers);
+            for (var i = 0; i < NoOfPlayers; i++)
             {
                 var index = StartPlayerId + i * IdStep;
                 var p = new Player(index, i + 1);
@@ -67,8 +66,6 @@ namespace ChessTournament
                 }
 
                 innerList.Add(match);
-                if (p2.Id - p1.Id == IdStep)
-                { result.Add(innerList); }
             }
 
             result.Add(innerList);
@@ -88,5 +85,7 @@ namespace ChessTournament
                     where match.FstPLayerId == id && !match.IsPlayed
                     select match.SndPlayer).FirstOrDefault();
         }
+
+        private static int NoOfPlayers => ProblemDesc.NoOfPlayers;
     }
 }
