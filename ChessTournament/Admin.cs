@@ -104,16 +104,16 @@ namespace ChessTournament
         {
             var fileSummary = GetSummary(OutputMedium.File);
             var remainingGroup = GetRemainingGroup();
-            var content = DisplayRounds(Rounds, fileSummary, remainingGroup);
+            var content = DisplayResults(fileSummary, remainingGroup);
             WriteAllText(OutputFile, content);
         }
 
-        private string DisplayRounds(IReadOnlyCollection<Round> rounds, string summary, string remainingGroup)
+        private string DisplayResults(string summary, string remainingGroup)
         {
             var result = new StringBuilder().AppendLine(summary);
-            for (var roundNo = 0; roundNo < rounds.Count; roundNo++)
+            for (var roundNo = 0; roundNo < Rounds.Count; roundNo++)
             {
-                var aRound = rounds.ElementAt(roundNo);
+                var aRound = Rounds.ElementAt(roundNo);
                 var cost = aRound.Cost;
                 var content = $"R {roundNo + 1,4}:\t{aRound,3} [Cost:{cost,4}]";
 
