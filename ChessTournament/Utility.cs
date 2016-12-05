@@ -11,15 +11,15 @@ namespace ChessTournament
 
         internal const int StartPlayerId = 1;
 
-        internal static Player FindPlayer(List<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
+        internal static Player FindPlayer(IEnumerable<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
         internal static IEnumerable<Player> FindGroup(HashSet<HashSet<Match>> matches, List<Player> players)
         {
-            var player = players[0];
+            var player = players.ElementAt(0);
             var results = new List<Player> { player };
             while (true)
             {
-                var partner = FindPlayerToMeet(matches, players, player.Id);
+                var partner = FindPartnerFor(player.Id, matches, players);
                 if (partner != null && !results.Contains(partner))
                 {
                     results.Add(partner);
@@ -72,7 +72,7 @@ namespace ChessTournament
             return result;
         }
 
-        internal static HashSet<Match> PlayerMatches(IEnumerable<HashSet<Match>> allMatches, List<Player> players, Player player)
+        internal static IEnumerable<Match> MatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, List<Player> players)
         {
             var roundIndex = players.IndexOf(player);
             return allMatches.ElementAt(roundIndex);
@@ -81,10 +81,10 @@ namespace ChessTournament
         /*********************************************** Private Fields **********************************************/
         private static IList<int> GetPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 
-        private static Player FindPlayerToMeet(IEnumerable<HashSet<Match>> allMatches, List<Player> players, int id)
+        private static Player FindPartnerFor(int id, IEnumerable<HashSet<Match>> allMatches, List<Player> players)
         {
             var player = FindPlayer(players, id);
-            var playerMatches = PlayerMatches(allMatches, players, player);
+            var playerMatches = MatchesFor(player, allMatches, players);
 
             return (from match in playerMatches
                     where match.FstPLayerId == id && !match.IsPlayed

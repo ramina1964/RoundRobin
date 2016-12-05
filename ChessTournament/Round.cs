@@ -8,7 +8,7 @@ namespace ChessTournament
     internal class Round
     {
         /************************************************ Constructor ************************************************/
-        internal Round(HashSet<HashSet<Match>> matches, List<Player> players)
+        internal Round(IEnumerable<HashSet<Match>> matches, List<Player> players)
         {
             Players = players;
             NoOfPlayers = Players.Count;
@@ -39,13 +39,13 @@ namespace ChessTournament
 
         private int RoundCost => RoundMatches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
 
-        private HashSet<HashSet<Match>> AllMatches { get; }
+        private IEnumerable<HashSet<Match>> AllMatches { get; }
 
         /*********************************************** Private Fields **********************************************/
         private Match ChooseMatch(int? startSndId)
         {
             var fstPlayer = FindFreePlayer();
-            var playerMatches = Utility.PlayerMatches(AllMatches, Players, fstPlayer);
+            var playerMatches = Utility.MatchesFor(fstPlayer, AllMatches, Players);
 
             if (fstPlayer == null)
                 return null;
