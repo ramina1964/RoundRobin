@@ -13,7 +13,7 @@ namespace ChessTournament
 
         internal static Player FindPlayer(IEnumerable<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
-        internal static IEnumerable<Player> FindGroup(HashSet<HashSet<Match>> matches, List<Player> players)
+		internal static IEnumerable<Player> FindGroup(HashSet<HashSet<Match>> matches, List<Player> players)
         {
             var player = players.ElementAt(0);
             var results = new List<Player> { player };
@@ -48,7 +48,6 @@ namespace ChessTournament
         {
             var idList = GetPlayerIds(players);
             var result = new HashSet<HashSet<Match>>();
-
             var combinations = new Combinations<int>(idList, 2).ToList();
 
             var innerList = new HashSet<Match>();
