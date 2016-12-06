@@ -111,12 +111,11 @@ namespace ChessTournament
         private string DisplayResults(string summary, string remainingGroup)
         {
             var result = new StringBuilder().AppendLine(summary);
-            for (var roundNo = 0; roundNo < Rounds.Count; roundNo++)
+			foreach (var round in Rounds)
             {
-                var aRound = Rounds.ElementAt(roundNo);
-                var cost = aRound.Cost;
-                var content = $"R {roundNo + 1,4}:\t{aRound,3} [Cost:{cost,4}]";
-
+                var cost = round.Cost;
+				var roundNo = Rounds.IndexOf(round) + 1;
+                var content = $"R {roundNo, 4}:\t{round, 3} [Cost:{cost, 4}]";
                 result.AppendLine(content);
             }
 
