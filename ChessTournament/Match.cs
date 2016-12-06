@@ -31,9 +31,6 @@ namespace ChessTournament
 
         internal bool IsPlayed { get; set; }
 
-        public override string ToString()
-        {
-            return $"({FstPLayerId, 3}, {SndPlayerId, 3})";
-        }
+        public override string ToString() => $"({FstPLayerId, 3}, {SndPlayerId, 3})";
     }
 }
