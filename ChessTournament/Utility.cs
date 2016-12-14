@@ -74,7 +74,10 @@ namespace ChessTournament
         internal static IEnumerable<Match> MatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, List<Player> players)
         {
             var roundIndex = players.IndexOf(player);
-            return allMatches.ElementAt(roundIndex);
+
+	        return roundIndex == NoOfPlayers - 1 ?
+				null :
+				allMatches.ElementAt(roundIndex);
         }
 
         /*********************************************** Private Fields **********************************************/
