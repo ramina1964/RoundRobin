@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using static System.IO.File;
-using static System.String;
 
 namespace ChessTournament
 {
@@ -90,28 +89,15 @@ namespace ChessTournament
 		/*************************************************** Private Methds ****************************************************/
 		private string GetRemainingGroup()
 		{
-			if (IsRoundSetUpPossible())
-				return "No Remaining Groups";
-
-			return "There are Remaining Groups!";
+			return IsRoundSetUpPossible() ?
+				"No Remaining Groups" :
+				"There are Remaining Groups!";
 		}
 
 		private bool IsRoundSetUpPossible()
 		{
-			// 1) For each player: - Return a list of players he hasn't played against.
-			// 2) Add the player to the list above.
-			var playersNotMet = new List<List<Player>>();
-			foreach (var player in Players)
-			{
-				var notPlayedAgainst = NotPlayedAgainst(player);
-				playersNotMet.Add(notPlayedAgainst);
-			}
-
-			// 3) Check if there are other players with the same list of players they havn't played against
+			var playersNotMet = Players.Select(NotPlayedAgainst).ToList();
 			var equalPlayerList = ExtractEqualPlayerLists(playersNotMet);
-
-			// 4) If there are other players above, check if the length of the list is odd.
-			// 5) If the list length above is an odd number, return false, otherwise true.
 			return equalPlayerList.All(playerList => playerList.Count == 1 || playerList.Count % 2 == 0);
 		}
 
