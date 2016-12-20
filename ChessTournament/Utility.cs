@@ -13,7 +13,7 @@ namespace ChessTournament
 
         internal static Player FindPlayer(IEnumerable<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
-		internal static IEnumerable<Player> FindGroup(HashSet<HashSet<Match>> matches, List<Player> players)
+		internal static IEnumerable<Player> FindGroup(List<List<Match>> matches, List<Player> players)
         {
             var player = players.ElementAt(0);
             var results = new List<Player> { player };
@@ -44,13 +44,13 @@ namespace ChessTournament
             return result;
         }
 
-        internal static HashSet<HashSet<Match>> InitializeAllMatches(List<Player> players)
+        internal static List<List<Match>> InitializeAllMatches(List<Player> players)
         {
             var idList = GetPlayerIds(players);
-            var result = new HashSet<HashSet<Match>>();
+            var result = new List<List<Match>>();
             var combinations = new Combinations<int>(idList, 2).ToList();
 
-            var innerList = new HashSet<Match>();
+            var innerList = new List<Match>();
             foreach (var comb in combinations)
             {
                 var p1 = FindPlayer(players, comb[0]);
@@ -60,8 +60,8 @@ namespace ChessTournament
                 {
                     if (innerList.Count > 0)
                     { result.Add(innerList); }
-                    innerList = new HashSet<Match>() { match };
-                    continue;
+                    innerList = new List<Match>() { match };
+                    continue; 
                 }
 
                 innerList.Add(match);
@@ -71,7 +71,7 @@ namespace ChessTournament
             return result;
         }
 
-        internal static IEnumerable<Match> MatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, List<Player> players)
+        internal static IEnumerable<Match> MatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
         {
             var roundIndex = players.IndexOf(player);
 
@@ -83,7 +83,7 @@ namespace ChessTournament
         /*********************************************** Private Fields **********************************************/
         private static IList<int> GetPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 
-        private static Player FindPartnerFor(int id, IEnumerable<HashSet<Match>> allMatches, List<Player> players)
+        private static Player FindPartnerFor(int id, List<List<Match>> allMatches, List<Player> players)
         {
             var player = FindPlayer(players, id);
             var playerMatches = MatchesFor(player, allMatches, players);

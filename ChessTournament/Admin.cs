@@ -173,7 +173,7 @@ namespace ChessTournament
 			return result.ToString();
 		}
 
-		private HashSet<Round> EstimateElapsedTime()
+		private List<Round> EstimateElapsedTime()
 		{
 			var watch = Stopwatch.StartNew();
 			var rounds = SetupRounds();
@@ -182,9 +182,9 @@ namespace ChessTournament
 			return rounds;
 		}
 
-		private HashSet<Round> SetupRounds()
+		private List<Round> SetupRounds()
 		{
-			var rounds = new HashSet<Round>();
+			var rounds = new List<Round>();
 			for (var roundNo = 0; roundNo < NoOfRoundsDesired; roundNo++)
 			{
 				var aRound = new Round(AllMatches, Players);
@@ -199,9 +199,9 @@ namespace ChessTournament
 		}
 
 		/*************************************************** Private Fields ****************************************************/
-		private HashSet<HashSet<Match>> AllMatches { get; }
+		private List<List<Match>> AllMatches { get; }
 
-		private HashSet<Round> TriedRounds { get; }
+		private List<Round> TriedRounds { get; }
 
 		private List<Player> Players { get; }
 
