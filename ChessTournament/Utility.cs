@@ -15,7 +15,7 @@ namespace ChessTournament
 
 		internal static IEnumerable<Player> FindGroup(List<List<Match>> matches, List<Player> players)
         {
-            var player = players.ElementAt(0);
+            var player = players.First();
             var results = new List<Player> { player };
             while (true)
             {
@@ -74,14 +74,13 @@ namespace ChessTournament
         internal static IEnumerable<Match> MatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
         {
             var roundIndex = players.IndexOf(player);
-
-	        return roundIndex == NoOfPlayers - 1 ?
+			return roundIndex == NoOfPlayers - 1 ?
 				null :
-				allMatches.ElementAt(roundIndex);
-        }
+				allMatches[roundIndex];
+		}
 
-        /*********************************************** Private Fields **********************************************/
-        private static IList<int> GetPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
+		/*********************************************** Private Fields **********************************************/
+		private static IList<int> GetPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 
         private static Player FindPartnerFor(int id, List<List<Match>> allMatches, List<Player> players)
         {

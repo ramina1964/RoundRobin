@@ -80,7 +80,7 @@ namespace ChessTournament
 
                 if (match == null)
                 {
-                    var lastMatch = matches.ElementAt(matches.Count - 1);
+                    var lastMatch = matches.Last();
                     lastMatch.FstPlayer.IsBusy = false;
                     lastMatch.SndPlayer.IsBusy = false;
                     lastMatch.IsPlayed = false;
