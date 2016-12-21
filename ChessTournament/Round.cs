@@ -55,23 +55,48 @@ namespace ChessTournament
 				if (match == null)
 				{
 					var lastMatch = matches.Last();
-					Utility.UpdateMatch(AllMatches, Players, lastMatch, false);
+					UpdateMatch(lastMatch, false);
 					matches.Remove(lastMatch);
 					startSndId = lastMatch.SndPlayerId + IdStep;
 					continue;
 				}
 
-				Utility.UpdateMatch(AllMatches, Players, match, true);
+				UpdateMatch(match, true);
 				matches.Add(match);
 				startSndId = null;
 			}
 			return matches;
 		}
 
+		internal void UpdateMatch(Match match, bool isPlayed)
+		{
+			var dualMatch = FindDualMatch(AllMatches, Players, match);
+			if (isPlayed)
+			{
+				match.FstPlayer.IsBusy = true;
+				match.SndPlayer.IsBusy = true;
+				match.IsPlayed = true;
+				dualMatch.IsPlayed = true;
+				return;
+			}
+
+			match.FstPlayer.IsBusy = false;
+			match.SndPlayer.IsBusy = false;
+			match.IsPlayed = false;
+			dualMatch.IsPlayed = false;
+		}
+
+		private static Match FindDualMatch(List<List<Match>> allMatches, List<Player> players, Match match)
+		{
+			var matches = Utility.FindMatchesFor(match.SndPlayer, allMatches, players);
+			return matches.FirstOrDefault(item => item.SndPlayerId == match.FstPLayerId);
+		}
+
+
 		private Match ChooseMatch(int? startSndId)
 		{
 			var fstPlayer = FindFreePlayer();
-			var playerMatches = Utility.FindMatchesFor(AllMatches, fstPlayer, Players);
+			var playerMatches = Utility.FindMatchesFor(fstPlayer, AllMatches, Players);
 
 			if (fstPlayer == null)
 				return null;
@@ -79,15 +104,8 @@ namespace ChessTournament
 			if (startSndId == null)
 				startSndId = fstPlayer.Id + IdStep;
 
-			foreach (var match in playerMatches)
-			{
-				if (match.SndPlayerId < startSndId || match.SndPlayer.IsBusy || match.IsPlayed)
-				{ continue; }
-
-				return match;
-			}
-
-			return null;
+			return playerMatches.FirstOrDefault(match =>
+				!(match.SndPlayerId < startSndId) && !match.SndPlayer.IsBusy && !match.IsPlayed);
 		}
 
 		private List<Match> RoundMatches { get; }
