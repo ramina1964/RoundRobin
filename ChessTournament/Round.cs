@@ -55,13 +55,13 @@ namespace ChessTournament
 				if (match == null)
 				{
 					var lastMatch = matches.Last();
-					UpdateMatch(lastMatch, false);
+					Utility.UpdateMatch(lastMatch, false);
 					matches.Remove(lastMatch);
 					startSndId = lastMatch.SndPlayerId + IdStep;
 					continue;
 				}
 
-				UpdateMatch(match, true);
+				Utility.UpdateMatch(match, true);
 				matches.Add(match);
 				startSndId = null;
 			}
@@ -70,36 +70,20 @@ namespace ChessTournament
 			return matches;
 		}
 
-		private void UpdateMatch(Match match, bool isPlayed)
-		{
-			if (isPlayed)
-			{
-				match.FstPlayer.IsBusy = true;
-				match.SndPlayer.IsBusy = true;
-				match.IsPlayed = true;
-				return;
-			}
-
-			match.FstPlayer.IsBusy = false;
-			match.SndPlayer.IsBusy = false;
-			match.IsPlayed = false;
-		}
-
 		private void UpdateDualMatches(List<Match> matches)
 		{
 			foreach (var match in matches)
 			{
-				var dualMatch = FindDualMatch(Players, match);
-				UpdateMatch(dualMatch, true);
+				var dualMatch = FindDualMatch(match);
+				Utility.UpdateMatch(dualMatch, true);
 			}
 		}
 
-		private Match FindDualMatch(List<Player> players, Match match)
+		private Match FindDualMatch(Match match)
 		{
-			var matches = Utility.FindMatchesFor(match.SndPlayer, AllMatches, players);
+			var matches = Utility.FindMatchesFor(match.SndPlayer, AllMatches, Players);
 			return matches.FirstOrDefault(item => item.SndPlayerId == match.FstPLayerId);
 		}
-
 
 		private Match ChooseMatch(int? startSndId)
 		{

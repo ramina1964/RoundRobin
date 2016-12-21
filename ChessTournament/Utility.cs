@@ -73,6 +73,21 @@ namespace ChessTournament
 			return result;
 		}
 
+		internal static void UpdateMatch(Match match, bool isPlayed)
+		{
+			if (isPlayed)
+			{
+				match.FstPlayer.IsBusy = true;
+				match.SndPlayer.IsBusy = true;
+				match.IsPlayed = true;
+				return;
+			}
+
+			match.FstPlayer.IsBusy = false;
+			match.SndPlayer.IsBusy = false;
+			match.IsPlayed = false;
+		}
+
 		internal static IEnumerable<Match> FindMatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
 			=> allMatches[players.IndexOf(player)];
 
