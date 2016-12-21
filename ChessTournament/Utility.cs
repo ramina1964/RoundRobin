@@ -73,30 +73,6 @@ namespace ChessTournament
 			return result;
 		}
 
-		//internal static void UpdateMatch(List<List<Match>> allMatches, List<Player> players, Match match, bool isPlayed)
-		//{
-		//	var dualMatch = FindDualMatch(allMatches, players, match);
-		//	if (isPlayed)
-		//	{
-		//		match.FstPlayer.IsBusy = true;
-		//		match.SndPlayer.IsBusy = true;
-		//		match.IsPlayed = true;
-		//		dualMatch.IsPlayed = true;
-		//		return;
-		//	}
-
-		//	match.FstPlayer.IsBusy = false;
-		//	match.SndPlayer.IsBusy = false;
-		//	match.IsPlayed = false;
-		//	dualMatch.IsPlayed = false;
-		//}
-
-		//private static Match FindDualMatch(List<List<Match>> allMatches, List<Player> players, Match match)
-		//{
-		//	var matches = FindMatchesFor(match.SndPlayer, allMatches, players);
-		//	return matches.FirstOrDefault(item => item.SndPlayerId == match.FstPLayerId);
-		//}
-
 		internal static IEnumerable<Match> FindMatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
 			=> allMatches[players.IndexOf(player)];
 

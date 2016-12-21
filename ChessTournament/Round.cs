@@ -65,30 +65,38 @@ namespace ChessTournament
 				matches.Add(match);
 				startSndId = null;
 			}
+
+			UpdateDualMatches(matches);
 			return matches;
 		}
 
-		internal void UpdateMatch(Match match, bool isPlayed)
+		private void UpdateMatch(Match match, bool isPlayed)
 		{
-			var dualMatch = FindDualMatch(AllMatches, Players, match);
 			if (isPlayed)
 			{
 				match.FstPlayer.IsBusy = true;
 				match.SndPlayer.IsBusy = true;
 				match.IsPlayed = true;
-				dualMatch.IsPlayed = true;
 				return;
 			}
 
 			match.FstPlayer.IsBusy = false;
 			match.SndPlayer.IsBusy = false;
 			match.IsPlayed = false;
-			dualMatch.IsPlayed = false;
 		}
 
-		private static Match FindDualMatch(List<List<Match>> allMatches, List<Player> players, Match match)
+		private void UpdateDualMatches(List<Match> matches)
 		{
-			var matches = Utility.FindMatchesFor(match.SndPlayer, allMatches, players);
+			foreach (var match in matches)
+			{
+				var dualMatch = FindDualMatch(Players, match);
+				UpdateMatch(dualMatch, true);
+			}
+		}
+
+		private Match FindDualMatch(List<Player> players, Match match)
+		{
+			var matches = Utility.FindMatchesFor(match.SndPlayer, AllMatches, players);
 			return matches.FirstOrDefault(item => item.SndPlayerId == match.FstPLayerId);
 		}
 
