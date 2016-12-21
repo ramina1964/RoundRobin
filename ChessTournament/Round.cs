@@ -42,9 +42,9 @@ namespace ChessTournament
 		private List<List<Match>> AllMatches { get; }
 
 		/*********************************************** Private Fields **********************************************/
-		private HashSet<Match> SetupRound()
+		private List<Match> SetupRound()
 		{
-			var matches = new HashSet<Match>();
+			var matches = new List<Match>();
 			int? startSndId = null;
 			while (matches.Count < NoOfMatchesPerRound)
 			{
@@ -55,14 +55,13 @@ namespace ChessTournament
 				if (match == null)
 				{
 					var lastMatch = matches.Last();
-					lastMatch.FstPlayer.IsBusy = false;
-					lastMatch.SndPlayer.IsBusy = false;
-					lastMatch.IsPlayed = false;
+					Utility.UpdateMatch(AllMatches, Players, lastMatch, false);
 					matches.Remove(lastMatch);
 					startSndId = lastMatch.SndPlayerId + IdStep;
 					continue;
 				}
 
+				Utility.UpdateMatch(AllMatches, Players, match, true);
 				matches.Add(match);
 				startSndId = null;
 			}
@@ -72,7 +71,7 @@ namespace ChessTournament
 		private Match ChooseMatch(int? startSndId)
 		{
 			var fstPlayer = FindFreePlayer();
-			var playerMatches = Utility.FindMatchesFor(fstPlayer, AllMatches, Players);
+			var playerMatches = Utility.FindMatchesFor(AllMatches, fstPlayer, Players);
 
 			if (fstPlayer == null)
 				return null;
@@ -83,18 +82,15 @@ namespace ChessTournament
 			foreach (var match in playerMatches)
 			{
 				if (match.SndPlayerId < startSndId || match.SndPlayer.IsBusy || match.IsPlayed)
-					continue;
+				{ continue; }
 
-				match.FstPlayer.IsBusy = true;
-				match.SndPlayer.IsBusy = true;
-				match.IsPlayed = true;
 				return match;
 			}
 
 			return null;
 		}
 
-		private HashSet<Match> RoundMatches { get; }
+		private List<Match> RoundMatches { get; }
 
 		private string Display()
 		{

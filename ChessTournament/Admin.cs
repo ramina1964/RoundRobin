@@ -133,7 +133,7 @@ namespace ChessTournament
 		private List<Player> NotPlayedAgainst(Player player)
 		{
 			var result = new List<Player>(NoOfPlayers);
-			var potentialMatches = Utility.FindMatchesFor(player, AllMatches, Players);
+			var potentialMatches = Utility.FindMatchesFor(AllMatches, player, Players);
 			if (potentialMatches == null)
 				return null;
 

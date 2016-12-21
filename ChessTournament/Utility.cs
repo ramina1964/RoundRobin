@@ -1,5 +1,4 @@
-﻿using System.CodeDom.Compiler;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Facet.Combinatorics;
 
@@ -74,7 +73,31 @@ namespace ChessTournament
 			return result;
 		}
 
-		internal static IEnumerable<Match> FindMatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
+		internal static void UpdateMatch(List<List<Match>> allMatches, List<Player> players, Match match, bool isPlayed)
+		{
+			var dualMatch = FindDualMatch(allMatches, players, match);
+			if (isPlayed)
+			{
+				match.FstPlayer.IsBusy = true;
+				match.SndPlayer.IsBusy = true;
+				match.IsPlayed = true;
+				dualMatch.IsPlayed = true;
+				return;
+			}
+
+			match.FstPlayer.IsBusy = false;
+			match.SndPlayer.IsBusy = false;
+			match.IsPlayed = false;
+			dualMatch.IsPlayed = false;
+		}
+
+		private static Match FindDualMatch(List<List<Match>> allMatches, List<Player> players, Match match)
+		{
+			var matches = FindMatchesFor(allMatches, match.SndPlayer, players);
+			return matches.FirstOrDefault(item => item.SndPlayerId == match.FstPLayerId);
+		}
+
+		internal static IEnumerable<Match> FindMatchesFor(List<List<Match>> allMatches, Player player, List<Player> players)
 			=> allMatches[players.IndexOf(player)];
 
 		/*********************************************** Private Fields **********************************************/
@@ -83,7 +106,7 @@ namespace ChessTournament
 		private static Player FindPartnerFor(int id, List<List<Match>> allMatches, List<Player> players)
 		{
 			var player = FindPlayerById(players, id);
-			var playerMatches = FindMatchesFor(player, allMatches, players);
+			var playerMatches = FindMatchesFor(allMatches, player, players);
 
 			return (from match in playerMatches
 					where match.FstPLayerId == id && !match.IsPlayed
