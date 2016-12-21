@@ -86,15 +86,14 @@ namespace ChessTournament
 		}
 
 		/*************************************************** Private Methds ****************************************************/
-		/*************************************************** Private Methds ****************************************************/
 		private string GetRemainingGroup()
 		{
-			return IsRoundSetUpPossible() ?
+			return IsTournamentSetUpPossible() ?
 				"No Remaining Groups" :
 				"There are Remaining Groups!";
 		}
 
-		private bool IsRoundSetUpPossible()
+		private bool IsTournamentSetUpPossible()
 		{
 			var playersNotMet = Players.Select(NotPlayedAgainst).ToList();
 			var equalPlayerList = ExtractEqualPlayerLists(playersNotMet);
@@ -134,7 +133,7 @@ namespace ChessTournament
 		private List<Player> NotPlayedAgainst(Player player)
 		{
 			var result = new List<Player>(NoOfPlayers);
-			var potentialMatches = Utility.MatchesFor(player, AllMatches, Players);
+			var potentialMatches = Utility.FindMatchesFor(player, AllMatches, Players);
 			if (potentialMatches == null)
 				return null;
 

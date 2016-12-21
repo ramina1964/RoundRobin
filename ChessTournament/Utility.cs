@@ -12,7 +12,7 @@ namespace ChessTournament
 
 		internal const int StartPlayerId = 1;
 
-		internal static Player FindPlayer(IEnumerable<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
+		internal static Player FindPlayerById(IEnumerable<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
 		internal static IEnumerable<Player> FindGroup(List<List<Match>> matches, List<Player> players)
 		{
@@ -47,15 +47,18 @@ namespace ChessTournament
 
 		internal static List<List<Match>> InitializeAllMatches(List<Player> players)
 		{
-			var idList = GetPlayerIds(players);
+			var idList = GetAllPlayerIds(players);
 			var result = new List<List<Match>>();
+
+			// Establish a list containing all variations of length two in idList with repetion:
+			// No. of elements in variations id N^2 for N elements in idList.
 			var variations = new Variations<int>(idList, 2, GenerateOption.WithRepetition).ToList();
 
 			var innerList = new List<Match>();
 			foreach (var item in variations)
 			{
-				var p1 = FindPlayer(players, item[0]);
-				var p2 = FindPlayer(players, item[1]);
+				var p1 = FindPlayerById(players, item[0]);
+				var p2 = FindPlayerById(players, item[1]);
 				var match = new Match(p1, p2);
 				if (p2.Id == StartPlayerId && innerList.Count == NoOfPlayers)
 				{
@@ -71,16 +74,16 @@ namespace ChessTournament
 			return result;
 		}
 
-		internal static IEnumerable<Match> MatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
+		internal static IEnumerable<Match> FindMatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
 			=> allMatches[players.IndexOf(player)];
 
 		/*********************************************** Private Fields **********************************************/
-		private static IList<int> GetPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
+		private static IList<int> GetAllPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 
 		private static Player FindPartnerFor(int id, List<List<Match>> allMatches, List<Player> players)
 		{
-			var player = FindPlayer(players, id);
-			var playerMatches = MatchesFor(player, allMatches, players);
+			var player = FindPlayerById(players, id);
+			var playerMatches = FindMatchesFor(player, allMatches, players);
 
 			return (from match in playerMatches
 					where match.FstPLayerId == id && !match.IsPlayed

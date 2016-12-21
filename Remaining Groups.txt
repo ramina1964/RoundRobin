@@ -1,0 +1,9 @@
+Her er fremgangsmåten på hvordan du selv kan sjekke om det er sirkulære grupper. Se nedenfor:
+
+1. For hver spiller - finn alle motstandere som han ikke har spilt mot før.
+2. Legg spilleren selv til i listen over motstandere i 1.
+3. Sjekk om det er andre spillere som har samme sett med spillere som i 2
+   (dvs alle motstandere + seg selv) i sin liste.
+4. Hvis det er flere spillere med samme motstandere igjen sjekk om lengden av listen er oddetall.
+5. Dersom lengden i punkt 4. er oddetall er det bevis for at runden ikke kan settes opp.
+
