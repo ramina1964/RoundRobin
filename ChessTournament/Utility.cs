@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Linq;
 using Facet.Combinatorics;
 
@@ -71,10 +72,7 @@ namespace ChessTournament
 		}
 
 		internal static IEnumerable<Match> MatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
-		{
-			var roundIndex = players.IndexOf(player);
-			return allMatches[roundIndex];
-		}
+			=> allMatches[players.IndexOf(player)];
 
 		/*********************************************** Private Fields **********************************************/
 		private static IList<int> GetPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();

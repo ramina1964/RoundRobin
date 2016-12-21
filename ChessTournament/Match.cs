@@ -1,36 +1,37 @@
 ﻿
 namespace ChessTournament
 {
-    internal class Match
-    {
-        /************************************************ Constructor ************************************************/
-        internal Match(Player fstPlayer, Player sndPlayer)
-        {
-            FstPlayer = fstPlayer;
-            SndPlayer = sndPlayer;
+	internal class Match
+	{
+		/************************************************ Constructor ************************************************/
+		internal Match(Player fstPlayer, Player sndPlayer)
+		{
+			FstPlayer = fstPlayer;
+			SndPlayer = sndPlayer;
 
-            FstPLayerId = FstPlayer.Id;
-            SndPlayerId = SndPlayer.Id;
-            FstPlayerRank = FstPlayer.Rank;
-            SndPlayerRank = SndPlayer.Rank;
-            IsPlayed = false;
-        }
+			FstPLayerId = FstPlayer.Id;
+			SndPlayerId = SndPlayer.Id;
+			FstPlayerRank = FstPlayer.Rank;
+			SndPlayerRank = SndPlayer.Rank;
 
-        /********************************************** Class Interface **********************************************/
-        internal Player FstPlayer { get; }
+			IsPlayed = (FstPLayerId == SndPlayerId);
+		}
 
-        internal Player SndPlayer { get; }
+		/********************************************** Class Interface **********************************************/
+		internal Player FstPlayer { get; }
 
-        internal int FstPLayerId { get; }
+		internal Player SndPlayer { get; }
 
-        internal int SndPlayerId { get; }
+		internal int FstPLayerId { get; }
 
-        internal int FstPlayerRank { get; }
+		internal int SndPlayerId { get; }
 
-        internal int SndPlayerRank { get; }
+		internal int FstPlayerRank { get; }
 
-        internal bool IsPlayed { get; set; }
+		internal int SndPlayerRank { get; }
 
-        public override string ToString() => $"({FstPLayerId, 3}, {SndPlayerId, 3})";
-    }
+		internal bool IsPlayed { get; set; }
+
+		public override string ToString() => $"({FstPLayerId,3}, {SndPlayerId,3})";
+	}
 }
