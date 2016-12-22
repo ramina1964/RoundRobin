@@ -95,7 +95,7 @@ namespace ChessTournament
 
 		private bool IsTournamentSetUpPossible()
 		{
-			var playersNotMet = Players.Select(NotPlayedAgainst).ToList();
+			var playersNotMet = Players.Select(PotentialPartners).ToList();
 			var equalPlayerList = ExtractEqualPlayerLists(playersNotMet);
 			return equalPlayerList.All(playerList => playerList.Count == 1 || playerList.Count % 2 == 0);
 		}
@@ -130,15 +130,15 @@ namespace ChessTournament
 			return true;
 		}
 
-		private List<Player> NotPlayedAgainst(Player player)
+		private List<Player> PotentialPartners(Player player)
 		{
 			var result = new List<Player>(NoOfPlayers);
-			var potentialMatches = Utility.FindAllMatchesFor(player, AllMatches, Players);
-			if (potentialMatches == null)
+			var playerMatches = Utility.FindAllMatchesFor(player, AllMatches, Players);
+			if (playerMatches == null)
 				return null;
 
 			result.AddRange(
-				from match in potentialMatches
+				from match in playerMatches
 				where !match.IsPlayed
 				select match.SndPlayer);
 
