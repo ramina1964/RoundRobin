@@ -8,12 +8,12 @@ namespace ChessTournament
 	internal class Round
 	{
 		/************************************************ Constructor ************************************************/
-		internal Round(List<List<Match>> matches, List<Player> players)
+		internal Round(HashSet<HashSet<Match>> allMatches, List<Player> players)
 		{
 			Players = players;
 			NoOfPlayers = Players.Count;
 			NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
-			AllMatches = matches;
+			AllAllMatches = allMatches;
 
 			RoundMatches = SetupRound();
 			if (RoundMatches.Count == NoOfMatchesPerRound)
@@ -39,7 +39,7 @@ namespace ChessTournament
 
 		private int RoundCost => RoundMatches.Sum(item => Math.Abs(item.SndPlayerRank - item.FstPlayerRank));
 
-		private List<List<Match>> AllMatches { get; }
+		private HashSet<HashSet<Match>> AllAllMatches { get; }
 
 		/*********************************************** Private Fields **********************************************/
 		private List<Match> SetupRound()
@@ -81,14 +81,14 @@ namespace ChessTournament
 
 		private Match FindDualMatch(Match match)
 		{
-			var matches = Utility.FindMatchesFor(match.SndPlayer, AllMatches, Players);
+			var matches = Utility.FindMatchesFor(match.SndPlayer, AllAllMatches, Players);
 			return matches.FirstOrDefault(item => item.SndPlayerId == match.FstPLayerId);
 		}
 
 		private Match ChooseMatch(int? startSndId)
 		{
 			var fstPlayer = FindFreePlayer();
-			var playerMatches = Utility.FindMatchesFor(fstPlayer, AllMatches, Players);
+			var playerMatches = Utility.FindMatchesFor(fstPlayer, AllAllMatches, Players);
 
 			if (fstPlayer == null)
 				return null;

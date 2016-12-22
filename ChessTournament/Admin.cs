@@ -198,7 +198,7 @@ namespace ChessTournament
 		}
 
 		/*************************************************** Private Fields ****************************************************/
-		private List<List<Match>> AllMatches { get; }
+		private HashSet<HashSet<Match>> AllMatches { get; }
 
 		private List<Round> TriedRounds { get; }
 

@@ -13,13 +13,13 @@ namespace ChessTournament
 
 		internal static Player FindPlayerById(IEnumerable<Player> players, int id) => players.FirstOrDefault(p => p.Id == id);
 
-		internal static IEnumerable<Player> FindGroup(List<List<Match>> matches, List<Player> players)
+		internal static IEnumerable<Player> FindGroup(HashSet<HashSet<Match>> matches, List<Player> players)
 		{
 			var player = players.First();
 			var results = new List<Player> { player };
 			while (true)
 			{
-				var partner = FindPartnerFor(player.Id, matches, players);
+				var partner = FindPotentialPartnerFor(player.Id, matches, players);
 				if (partner != null && !results.Contains(partner))
 				{
 					results.Add(partner);
@@ -44,16 +44,16 @@ namespace ChessTournament
 			return result;
 		}
 
-		internal static List<List<Match>> InitializeAllMatches(List<Player> players)
+		internal static HashSet<HashSet<Match>> InitializeAllMatches(List<Player> players)
 		{
 			var idList = GetAllPlayerIds(players);
-			var result = new List<List<Match>>();
+			var result = new HashSet<HashSet<Match>>();
 
 			// Establish a list containing all variations of length two in idList with repetion:
 			// No. of elements in variations id N^2 for N elements in idList.
 			var variations = new Variations<int>(idList, 2, GenerateOption.WithRepetition).ToList();
 
-			var innerList = new List<Match>();
+			var innerList = new HashSet<Match>();
 			foreach (var item in variations)
 			{
 				var p1 = FindPlayerById(players, item[0]);
@@ -62,7 +62,7 @@ namespace ChessTournament
 				if (p2.Id == StartPlayerId && innerList.Count == NoOfPlayers)
 				{
 					result.Add(innerList);
-					innerList = new List<Match>() { match };
+					innerList = new HashSet<Match>() { match };
 					continue;
 				}
 
@@ -88,13 +88,15 @@ namespace ChessTournament
 			match.IsPlayed = false;
 		}
 
-		internal static IEnumerable<Match> FindMatchesFor(Player player, List<List<Match>> allMatches, List<Player> players)
-			=> allMatches[players.IndexOf(player)];
+		internal static IEnumerable<Match> FindMatchesFor(Player player, HashSet<HashSet<Match>> allMatches, List<Player> players)
+		{
+			return allMatches.ElementAt(players.IndexOf(player));
+		}
 
 		/*********************************************** Private Fields **********************************************/
 		private static IList<int> GetAllPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 
-		private static Player FindPartnerFor(int id, List<List<Match>> allMatches, List<Player> players)
+		private static Player FindPotentialPartnerFor(int id, HashSet<HashSet<Match>> allMatches, List<Player> players)
 		{
 			var player = FindPlayerById(players, id);
 			var playerMatches = FindMatchesFor(player, allMatches, players);
