@@ -88,8 +88,19 @@ namespace ChessTournament
 			match.IsPlayed = false;
 		}
 
-		internal static IEnumerable<Match> FindMatchesFor(Player player, HashSet<HashSet<Match>> allMatches, List<Player> players)
+		internal static IEnumerable<Match> FindAllMatchesFor(Player player, HashSet<HashSet<Match>> allMatches, List<Player> players)
 		{
+			//foreach (var playerMatches in allMatches)
+			//{
+			//	var fstMatch = playerMatches.ElementAt(0);
+			//	if (fstMatch.FstPLayerId != player.Id)
+			//		continue;
+
+			//	return playerMatches;
+			//}
+
+			//return null;
+
 			return allMatches.ElementAt(players.IndexOf(player));
 		}
 
@@ -99,7 +110,7 @@ namespace ChessTournament
 		private static Player FindPotentialPartnerFor(int id, HashSet<HashSet<Match>> allMatches, List<Player> players)
 		{
 			var player = FindPlayerById(players, id);
-			var playerMatches = FindMatchesFor(player, allMatches, players);
+			var playerMatches = FindAllMatchesFor(player, allMatches, players);
 
 			return (from match in playerMatches
 					where match.FstPLayerId == id && !match.IsPlayed
