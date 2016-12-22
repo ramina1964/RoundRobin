@@ -8,9 +8,9 @@ namespace ChessTournament
 	internal class Round
 	{
 		/************************************************ Constructor ************************************************/
-		internal Round(IEnumerable<HashSet<Match>> allMatches, List<Player> players)
+		internal Round(IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
 		{
-			Players = players;
+			Players = players.ToList();
 			NoOfPlayers = Players.Count;
 			NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
 			AllMatches = allMatches;
@@ -70,7 +70,7 @@ namespace ChessTournament
 			return matches;
 		}
 
-		private void UpdateDualMatches(List<Match> matches)
+		private void UpdateDualMatches(IEnumerable<Match> matches)
 		{
 			foreach (var match in matches)
 			{

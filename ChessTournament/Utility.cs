@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Facet.Combinatorics;
 
 namespace ChessTournament
@@ -14,7 +15,7 @@ namespace ChessTournament
 
 		internal static Player FindPlayerById(int id, IEnumerable<Player> players) => players.FirstOrDefault(p => p.Id == id);
 
-		internal static List<Player> InitializePlayers
+		internal static IEnumerable<Player> InitializePlayers
 		{
 			get
 			{
@@ -30,9 +31,10 @@ namespace ChessTournament
 			}
 		}
 
-		internal static IEnumerable<HashSet<Match>> InitializeAllMatches(List<Player> players)
+		internal static IEnumerable<HashSet<Match>> InitializeAllMatches(IEnumerable<Player> players)
 		{
-			var idList = GetAllPlayerIds(players);
+			var pList = players.ToList();
+			var idList = GetAllPlayerIds(pList);
 			var result = new HashSet<HashSet<Match>>();
 
 			// Establish a list containing all variations of length two in idList with repetion:
@@ -42,8 +44,8 @@ namespace ChessTournament
 			var innerList = new HashSet<Match>();
 			foreach (var item in variations)
 			{
-				var p1 = FindPlayerById(item[0], players);
-				var p2 = FindPlayerById(item[1], players);
+				var p1 = FindPlayerById(item[0], pList);
+				var p2 = FindPlayerById(item[1], pList);
 				var match = new Match(p1, p2);
 				if (p2.Id == StartPlayerId && innerList.Count == NoOfPlayers)
 				{
@@ -74,17 +76,19 @@ namespace ChessTournament
 			match.IsPlayed = false;
 		}
 
-		internal static List<List<Player>> ExtractEqualPlayerLists(List<List<Player>> partnerList)
+		internal static IEnumerable<List<Player>> ExtractEqualPlayerLists(IEnumerable<List<Player>> partnerList)
 		{
+			var partners = partnerList.ToList();
+			var count = partners.Count;
 			var result = new List<List<Player>>(NoOfPlayers);
-			for (var i = 0; i < partnerList.Count - 1; i++)
+			for (var i = 0; i < count - 1; i++)
 			{
-				var fstPlayerList = partnerList[i];
+				var fstPlayerList = partners[i];
 				var localList = new List<List<Player>> { fstPlayerList };
 				var isFound = false;
-				for (var j = i + 1; j < partnerList.Count; j++)
+				for (var j = i + 1; j < count; j++)
 				{
-					var sndPlayerList = partnerList[j];
+					var sndPlayerList = partners[j];
 					if (!AreListsEqual(fstPlayerList, sndPlayerList))
 					{ continue; }
 
@@ -97,27 +101,28 @@ namespace ChessTournament
 				if (!isFound)
 					continue;
 
-				MergeLists(localList, result);
+				MergeFstToSndList(localList, result);
 			}
 
 			return result;
 		}
 
-		private static void MergeLists(IEnumerable<List<Player>> localList, ICollection<List<Player>> result)
+		private static void MergeFstToSndList(IEnumerable<List<Player>> localList, ICollection<List<Player>> result)
 		{
 			foreach (var group in localList)
 			{
-				if (!result.Contains(@group))
-					result.Add(@group);
+				if (!result.Contains(group))
+					result.Add(group);
 			}
 		}
 
 		internal static string DisplayRemainigLists(IEnumerable<List<Player>> equalLists)
 		{
-			var enumerables = equalLists as IList<List<Player>> ?? equalLists.ToList();
-			var lastIndex = enumerables[0].Count - 1;
-			var sb = new StringBuilder($"Remaining Groups:").AppendLine();
-			foreach (var item in enumerables)
+			// var enumerables = equalLists as IList<List<Player>> ?? equalLists.ToList();
+			var equals = equalLists.ToList();
+			var lastIndex = equals[0].Count - 1;
+			var sb = new StringBuilder("Remaining Groups:").AppendLine();
+			foreach (var item in equals)
 			{
 				sb.Append($"Player No. {item[lastIndex].Id,3}: ");
 				foreach (var player in item)
@@ -128,12 +133,15 @@ namespace ChessTournament
 			return sb.ToString();
 		}
 
-		internal static IEnumerable<Match> FindAllMatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, List<Player> players)
-		{ return allMatches.ElementAt(players.IndexOf(player)); }
+		internal static IEnumerable<Match> FindAllMatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
+		{
+			var pList = players.ToList();
+			return allMatches.ElementAt(pList.IndexOf(player));
+		}
 
 		/*********************************************** Private Fields **********************************************/
-		private static bool AreListsEqual(IEnumerable<Player> fstPlayerList, IEnumerable<Player> sndPlayerList)
-		{ return fstPlayerList.All(fstItem => sndPlayerList.Any(sndItem => sndItem.Id == fstItem.Id)); }
+		private static bool AreListsEqual(IEnumerable<Player> fstList, IEnumerable<Player> sndList)
+		{ return fstList.All(fstItem => sndList.Any(sndItem => sndItem.Id == fstItem.Id)); }
 
 		private static IList<int> GetAllPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 

@@ -19,10 +19,10 @@ namespace ChessTournament
 			NoOfPossibleMatches = ProblemDesc.NoOfPossibleMatches;
 			OutputFile = ProblemDesc.OutputFile;
 
-			Players = Utility.InitializePlayers;
+			Players = Utility.InitializePlayers.ToList();
 			AllMatches = Utility.InitializeAllMatches(Players);
 
-			TriedRounds = EstimateElapsedTime();
+			TriedRounds = EstimateElapsedTime().ToList();
 			Rounds = GetCompletedRounds;
 			IsDesiredNoOfRoundsMet = Rounds.Count == NoOfRoundsDesired;
 
@@ -138,7 +138,7 @@ namespace ChessTournament
 			return result.ToString();
 		}
 
-		private List<Round> EstimateElapsedTime()
+		private IEnumerable<Round> EstimateElapsedTime()
 		{
 			var watch = Stopwatch.StartNew();
 			var rounds = SetupRounds();
@@ -147,7 +147,7 @@ namespace ChessTournament
 			return rounds;
 		}
 
-		private List<Round> SetupRounds()
+		private IEnumerable<Round> SetupRounds()
 		{
 			var rounds = new List<Round>();
 			for (var roundNo = 0; roundNo < NoOfRoundsDesired; roundNo++)
