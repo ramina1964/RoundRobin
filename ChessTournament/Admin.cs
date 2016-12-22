@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Web.Services.Description;
 using static System.IO.File;
 
 namespace ChessTournament
@@ -107,28 +108,15 @@ namespace ChessTournament
 			{
 				var fstPlayerList = playersNotMet[i];
 				var sndPlayerList = playersNotMet[i + 1];
-				if (IsEqualList(fstPlayerList, sndPlayerList))
+				if (AreListsEqual(fstPlayerList, sndPlayerList))
 					result.Add(sndPlayerList);
 			}
 
 			return result;
 		}
 
-		private bool IsEqualList(List<Player> fstPlayerList, List<Player> sndPlayerList)
-		{
-			var fstListLength = fstPlayerList.Count;
-			var sndListLength = sndPlayerList.Count;
-			if (fstListLength != sndListLength)
-				return false;
-
-			for (var i = 0; i < sndListLength; i++)
-			{
-				if (fstPlayerList[i].Id != sndPlayerList[i].Id)
-					return false;
-			}
-
-			return true;
-		}
+		private static bool AreListsEqual(IEnumerable<Player> fstPlayerList, IEnumerable<Player>  sndPlayerList)
+		{ return fstPlayerList.All(fstItem => sndPlayerList.Any(sndItem => sndItem.Id == fstItem.Id)); }
 
 		private List<Player> PotentialPartners(Player player)
 		{
