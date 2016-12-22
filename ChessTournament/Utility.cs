@@ -32,20 +32,23 @@ namespace ChessTournament
 			}
 		}
 
-		internal static List<Player> InitializePlayers()
+		internal static List<Player> InitializePlayers
 		{
-			var result = new List<Player>(NoOfPlayers);
-			for (var i = 0; i < NoOfPlayers; i++)
+			get
 			{
-				var index = StartPlayerId + i * IdStep;
-				var p = new Player(index, i + 1);
-				result.Insert(i, p);
-			}
+				var result = new List<Player>(NoOfPlayers);
+				for (var i = 0; i < NoOfPlayers; i++)
+				{
+					var index = StartPlayerId + i * IdStep;
+					var p = new Player(index, i + 1);
+					result.Insert(i, p);
+				}
 
-			return result;
+				return result;
+			}
 		}
 
-		internal static HashSet<HashSet<Match>> InitializeAllMatches(List<Player> players)
+		internal static IEnumerable<HashSet<Match>> InitializeAllMatches(List<Player> players)
 		{
 			var idList = GetAllPlayerIds(players);
 			var result = new HashSet<HashSet<Match>>();
@@ -146,7 +149,7 @@ namespace ChessTournament
 		private static bool AreListsEqual(IEnumerable<Player> fstPlayerList, IEnumerable<Player> sndPlayerList)
 		{ return fstPlayerList.All(fstItem => sndPlayerList.Any(sndItem => sndItem.Id == fstItem.Id)); }
 
-		internal static IEnumerable<Match> FindAllMatchesFor(Player player, HashSet<HashSet<Match>> allMatches, List<Player> players)
+		internal static IEnumerable<Match> FindAllMatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, List<Player> players)
 		{ return allMatches.ElementAt(players.IndexOf(player)); }
 
 		/*********************************************** Private Fields **********************************************/

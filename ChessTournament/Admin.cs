@@ -19,7 +19,7 @@ namespace ChessTournament
 			NoOfPossibleMatches = ProblemDesc.NoOfPossibleMatches;
 			OutputFile = ProblemDesc.OutputFile;
 
-			Players = Utility.InitializePlayers();
+			Players = Utility.InitializePlayers;
 			AllMatches = Utility.InitializeAllMatches(Players);
 
 			TriedRounds = EstimateElapsedTime();
@@ -88,6 +88,9 @@ namespace ChessTournament
 		/*************************************************** Private Methds ****************************************************/
 		private string GetRemainingGroup()
 		{
+			if (IsDesiredNoOfRoundsMet)
+				return string.Empty;
+
 			var potentialPartners = Players.Select(PotentialPartners).ToList();
 			var equalLists = Utility.ExtractEqualPlayerLists(potentialPartners).Where(plist => plist.Count % 2 != 0);
 			return Utility.DisplayRemainigLists(equalLists);
@@ -161,7 +164,7 @@ namespace ChessTournament
 		}
 
 		/*************************************************** Private Fields ****************************************************/
-		private HashSet<HashSet<Match>> AllMatches { get; }
+		private IEnumerable<HashSet<Match>> AllMatches { get; }
 
 		private List<Round> TriedRounds { get; }
 
