@@ -95,27 +95,36 @@ namespace ChessTournament
 			for (var i = 0; i < partnerList.Count - 1; i++)
 			{
 				var fstPlayerList = partnerList[i];
+				var localList = new List<List<Player>> { fstPlayerList };
 				var isFound = false;
-
-				if (!result.Contains(fstPlayerList))
-				{ result.Add(fstPlayerList); }
 				for (var j = i + 1; j < partnerList.Count; j++)
 				{
 					var sndPlayerList = partnerList[j];
 					if (!AreListsEqual(fstPlayerList, sndPlayerList))
 					{ continue; }
 
-					if (!result.Contains(sndPlayerList))
-					{ result.Add(sndPlayerList); }
+					if (!localList.Contains(sndPlayerList))
+					{ localList.Add(sndPlayerList); }
 
 					isFound = true;
 				}
 
 				if (!isFound)
-				{ result.Remove(fstPlayerList); }
+					continue;
+
+				MergeLists(localList, result);
 			}
 
 			return result;
+		}
+
+		private static void MergeLists(IEnumerable<List<Player>> localList, ICollection<List<Player>> result)
+		{
+			foreach (var group in localList)
+			{
+				if (!result.Contains(@group))
+					result.Add(@group);
+			}
 		}
 
 		internal static string DisplayRemainigLists(IEnumerable<List<Player>> equalLists)
