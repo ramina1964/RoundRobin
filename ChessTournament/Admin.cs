@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Web.Services.Description;
 using static System.IO.File;
 
 namespace ChessTournament
@@ -89,34 +88,10 @@ namespace ChessTournament
 		/*************************************************** Private Methds ****************************************************/
 		private string GetRemainingGroup()
 		{
-			return IsTournamentSetUpPossible() ?
-				"No Remaining Groups" :
-				"There are Remaining Groups!";
+			var potentialPartners = Players.Select(PotentialPartners).ToList();
+			var equalLists = Utility.ExtractEqualPlayerLists(potentialPartners).Where(plist => plist.Count % 2 != 0);
+			return Utility.DisplayRemainigLists(equalLists);
 		}
-
-		private bool IsTournamentSetUpPossible()
-		{
-			var playersNotMet = Players.Select(PotentialPartners).ToList();
-			var equalPlayerList = ExtractEqualPlayerLists(playersNotMet);
-			return equalPlayerList.All(playerList => playerList.Count == 1 || playerList.Count % 2 == 0);
-		}
-
-		private IEnumerable<List<Player>> ExtractEqualPlayerLists(IReadOnlyList<List<Player>> playersNotMet)
-		{
-			var result = new List<List<Player>>() { playersNotMet[0] };
-			for (var i = 0; i < result.Count - 1; i++)
-			{
-				var fstPlayerList = playersNotMet[i];
-				var sndPlayerList = playersNotMet[i + 1];
-				if (AreListsEqual(fstPlayerList, sndPlayerList))
-					result.Add(sndPlayerList);
-			}
-
-			return result;
-		}
-
-		private static bool AreListsEqual(IEnumerable<Player> fstPlayerList, IEnumerable<Player>  sndPlayerList)
-		{ return fstPlayerList.All(fstItem => sndPlayerList.Any(sndItem => sndItem.Id == fstItem.Id)); }
 
 		private List<Player> PotentialPartners(Player player)
 		{

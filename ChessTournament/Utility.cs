@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Facet.Combinatorics;
 
 namespace ChessTournament
@@ -88,21 +89,56 @@ namespace ChessTournament
 			match.IsPlayed = false;
 		}
 
-		internal static IEnumerable<Match> FindAllMatchesFor(Player player, HashSet<HashSet<Match>> allMatches, List<Player> players)
+		internal static List<List<Player>> ExtractEqualPlayerLists(List<List<Player>> partnerList)
 		{
-			//foreach (var playerMatches in allMatches)
-			//{
-			//	var fstMatch = playerMatches.ElementAt(0);
-			//	if (fstMatch.FstPLayerId != player.Id)
-			//		continue;
+			var result = new List<List<Player>>(NoOfPlayers);
+			for (var i = 0; i < partnerList.Count - 1; i++)
+			{
+				var fstPlayerList = partnerList[i];
+				var isFound = false;
 
-			//	return playerMatches;
-			//}
+				if (!result.Contains(fstPlayerList))
+				{ result.Add(fstPlayerList); }
+				for (var j = i + 1; j < partnerList.Count; j++)
+				{
+					var sndPlayerList = partnerList[j];
+					if (!AreListsEqual(fstPlayerList, sndPlayerList))
+					{ continue; }
 
-			//return null;
+					if (!result.Contains(sndPlayerList))
+					{ result.Add(sndPlayerList); }
 
-			return allMatches.ElementAt(players.IndexOf(player));
+					isFound = true;
+				}
+
+				if (!isFound)
+				{ result.Remove(fstPlayerList); }
+			}
+
+			return result;
 		}
+
+		internal static string DisplayRemainigLists(IEnumerable<List<Player>> equalLists)
+		{
+			var enumerables = equalLists as IList<List<Player>> ?? equalLists.ToList();
+			var lastIndex = enumerables[0].Count - 1;
+			var sb = new StringBuilder($"Remaining Groups:").AppendLine();
+			foreach (var item in enumerables)
+			{
+				sb.Append($"Player No. {item[lastIndex].Id,3}: ");
+				foreach (var player in item)
+				{ sb.Append($"{player.Id,3} -> "); }
+				sb.AppendLine();
+			}
+
+			return sb.ToString();
+		}
+
+		private static bool AreListsEqual(IEnumerable<Player> fstPlayerList, IEnumerable<Player> sndPlayerList)
+		{ return fstPlayerList.All(fstItem => sndPlayerList.Any(sndItem => sndItem.Id == fstItem.Id)); }
+
+		internal static IEnumerable<Match> FindAllMatchesFor(Player player, HashSet<HashSet<Match>> allMatches, List<Player> players)
+		{ return allMatches.ElementAt(players.IndexOf(player)); }
 
 		/*********************************************** Private Fields **********************************************/
 		private static IList<int> GetAllPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
