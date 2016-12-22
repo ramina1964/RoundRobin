@@ -15,7 +15,7 @@ namespace ChessTournament
 			NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
 			AllMatches = allMatches;
 
-			RoundMatches = SetupRound();
+			RoundMatches = SetupRound().ToList();
 			if (RoundMatches.Count == NoOfMatchesPerRound)
 				Cost = RoundCost;
 		}
@@ -42,7 +42,7 @@ namespace ChessTournament
 		private IEnumerable<HashSet<Match>> AllMatches { get; }
 
 		/*********************************************** Private Fields **********************************************/
-		private List<Match> SetupRound()
+		private IEnumerable<Match> SetupRound()
 		{
 			var matches = new List<Match>();
 			int? startSndId = null;
