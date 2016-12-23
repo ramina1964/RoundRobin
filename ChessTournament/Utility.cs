@@ -76,15 +76,15 @@ namespace ChessTournament
 			match.IsPlayed = false;
 		}
 
-		internal static IEnumerable<List<Player>> ExtractEqualPlayerLists(IEnumerable<List<Player>> partnerList)
+		internal static IEnumerable<HashSet<Player>> ExtractEqualPlayerLists(IEnumerable<HashSet<Player>> partnerList)
 		{
 			var partners = partnerList.ToList();
 			var count = partners.Count;
-			var result = new List<List<Player>>(NoOfPlayers);
+			var result = new HashSet<HashSet<Player>>();
 			for (var i = 0; i < count - 1; i++)
 			{
 				var fstPlayerList = partners[i];
-				var localList = new List<List<Player>> { fstPlayerList };
+				var localList = new HashSet<HashSet<Player>> { fstPlayerList };
 				var isFound = false;
 				for (var j = i + 1; j < count; j++)
 				{
@@ -92,9 +92,7 @@ namespace ChessTournament
 					if (!AreListsEqual(fstPlayerList, sndPlayerList))
 					{ continue; }
 
-					if (!localList.Contains(sndPlayerList))
-					{ localList.Add(sndPlayerList); }
-
+					localList.Add(sndPlayerList);
 					isFound = true;
 				}
 
@@ -107,24 +105,18 @@ namespace ChessTournament
 			return result;
 		}
 
-		private static void MergeFstToSndList(IEnumerable<List<Player>> localList, ICollection<List<Player>> result)
+		private static void MergeFstToSndList(IEnumerable<HashSet<Player>> localList, ISet<HashSet<Player>> result)
 		{
 			foreach (var group in localList)
-			{
-				if (!result.Contains(group))
-					result.Add(group);
-			}
+			{ result.Add(group); }
 		}
 
-		internal static string DisplayRemainigLists(IEnumerable<List<Player>> equalLists)
+		internal static string DisplayRemainigLists(IEnumerable<HashSet<Player>> equalLists)
 		{
-			// var enumerables = equalLists as IList<List<Player>> ?? equalLists.ToList();
-			var equals = equalLists.ToList();
-			var lastIndex = equals[0].Count - 1;
 			var sb = new StringBuilder("Remaining Groups:").AppendLine();
-			foreach (var item in equals)
+			foreach (var item in equalLists)
 			{
-				sb.Append($"Player No. {item[lastIndex].Id,3}: ");
+				sb.Append($"Player No. {item.Last().Id,3}: ");
 				foreach (var player in item)
 				{ sb.Append($"{player.Id,3} -> "); }
 				sb.AppendLine();

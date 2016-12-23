@@ -91,22 +91,20 @@ namespace ChessTournament
 			if (IsDesiredNoOfRoundsMet)
 				return string.Empty;
 
-			var potentialPartners = Players.Select(PotentialPartners).ToList();
+			var potentialPartners = Players.Select(PotentialPartners);
 			var equalLists = Utility.ExtractEqualPlayerLists(potentialPartners).Where(plist => plist.Count % 2 != 0);
 			return Utility.DisplayRemainigLists(equalLists);
 		}
 
-		private List<Player> PotentialPartners(Player player)
+		private HashSet<Player> PotentialPartners(Player player)
 		{
-			var result = new List<Player>(NoOfPlayers);
+			var result = new HashSet<Player>();
 			var playerMatches = Utility.FindAllMatchesFor(player, AllMatches, Players);
 			if (playerMatches == null)
 				return null;
 
-			result.AddRange(
-				from match in playerMatches
-				where !match.IsPlayed
-				select match.SndPlayer);
+			foreach (var match in playerMatches)
+			{ result.Add(match.SndPlayer); }
 
 			result.Add(player);
 			return result;

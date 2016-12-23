@@ -6,7 +6,7 @@ namespace ChessTournament
     {
         /************************************************* Constants *************************************************/
         // Min and Max values for MaxNoOfPlayers
-        internal const int MaxNoOfPlayers = 26;
+        internal const int MaxNoOfPlayers = 30;
         internal const int MinNoOfPlayers = 4;
 
         // Min and Max values for NoOfRounds
