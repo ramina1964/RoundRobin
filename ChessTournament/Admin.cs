@@ -104,7 +104,10 @@ namespace ChessTournament
 				return null;
 
 			foreach (var match in playerMatches)
-			{ result.Add(match.SndPlayer); }
+			{
+				if (!match.IsPlayed)
+				{ result.Add(match.SndPlayer); }
+			}
 
 			result.Add(player);
 			return result;
