@@ -99,8 +99,8 @@ namespace ChessTournament
 		private HashSet<Player> PotentialPartners(Player player)
 		{
 			var result = new HashSet<Player>();
-			var playerMatches = Utility.FindAllMatchesFor(player, AllMatches, Players);
-			if (playerMatches == null)
+			var playerMatches = Utility.FindAllMatchesFor(player, AllMatches, Players).ToList();
+			if (playerMatches.Count == 0)
 				return null;
 
 			foreach (var match in playerMatches)
