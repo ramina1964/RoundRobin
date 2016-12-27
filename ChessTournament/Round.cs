@@ -71,10 +71,7 @@ namespace ChessTournament
 		}
 
 		private void UpdateDualMatches(IEnumerable<Match> matches)
-		{
-			var matchListt = matches.ToList();
-			matchListt.ForEach(item => Utility.UpdateMatch(FindDualMatch(item), true));
-		}
+		{ matches.ToList().ForEach(item => Utility.UpdateMatch(FindDualMatch(item), true)); }
 
 		private Match FindDualMatch(Match match)
 		{

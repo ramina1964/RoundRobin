@@ -105,11 +105,8 @@ namespace ChessTournament
 			return result;
 		}
 
-		private static void MergeFstToSndList(IEnumerable<HashSet<Player>> localList, ISet<HashSet<Player>> result)
-		{
-			foreach (var group in localList)
-			{ result.Add(group); }
-		}
+		private static void MergeFstToSndList(IEnumerable<HashSet<Player>> firstList, ISet<HashSet<Player>> result)
+		{ firstList.ToList().ForEach(item => result.Add(item)); }
 
 		internal static string DisplayRemainigLists(IEnumerable<HashSet<Player>> equalLists)
 		{
