@@ -125,12 +125,12 @@ namespace ChessTournament
 		internal static IEnumerable<Match> FindAllMatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
 		{
 			var pList = players.ToList();
-			return allMatches.ElementAt(pList.IndexOf(player));
+			return allMatches.ToList()[pList.IndexOf(player)];
 		}
 
 		/*********************************************** Private Fields **********************************************/
 		private static bool AreListsEqual(IEnumerable<Player> fstList, IEnumerable<Player> sndList)
-		{ return fstList.All(fstItem => sndList.Any(sndItem => sndItem.Id == fstItem.Id)); }
+		{ return fstList.All(item1 => sndList.Any(item2 => item2.Id == item1.Id)); }
 
 		private static IList<int> GetAllPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 
