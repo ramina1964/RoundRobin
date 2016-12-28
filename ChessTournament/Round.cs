@@ -8,6 +8,7 @@ namespace ChessTournament
 	internal class Round
 	{
 		/************************************************ Constructor ************************************************/
+
 		internal Round(IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
 		{
 			Players = players.ToList();
@@ -17,7 +18,7 @@ namespace ChessTournament
 
 			RoundMatches = SetupRound().ToList();
 			if (RoundMatches.Count == NoOfMatchesPerRound)
-				Cost = RoundCost;
+			{ Cost = RoundCost; }
 		}
 
 		/********************************************** Class Interface **********************************************/

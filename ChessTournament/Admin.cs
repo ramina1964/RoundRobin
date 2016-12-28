@@ -19,7 +19,7 @@ namespace ChessTournament
 			NoOfPossibleMatches = ProblemDesc.NoOfPossibleMatches;
 			OutputFile = ProblemDesc.OutputFile;
 
-			Players = Utility.InitializePlayers.ToList();
+			Players = Utility.InitializePlayers as HashSet<Player>;
 			AllMatches = Utility.InitializeAllMatches(Players);
 
 			TriedRounds = EstimateElapsedTime().ToList();
@@ -169,8 +169,8 @@ namespace ChessTournament
 
 		private List<Round> TriedRounds { get; }
 
-		private List<Player> Players { get; }
+		private HashSet<Player> Players { get; }
 
-		private void ResetPlayers() => Players.ForEach(p => p.IsBusy = false);
+		private void ResetPlayers() => Players.ToList().ForEach(p => p.IsBusy = false);
 	}
 }

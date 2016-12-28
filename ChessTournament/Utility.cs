@@ -19,12 +19,12 @@ namespace ChessTournament
 		{
 			get
 			{
-				var result = new List<Player>(NoOfPlayers);
+				var result = new HashSet<Player>();
 				for (var i = 0; i < NoOfPlayers; i++)
 				{
-					var index = StartPlayerId + i * IdStep;
-					var p = new Player(index, i + 1);
-					result.Insert(i, p);
+					var id = StartPlayerId + i * IdStep;
+					var p = new Player(id, i + 1);
+					result.Add(p);
 				}
 
 				return result;
@@ -50,7 +50,7 @@ namespace ChessTournament
 				if (p2.Id == StartPlayerId && innerList.Count == NoOfPlayers)
 				{
 					result.Add(innerList);
-					innerList = new HashSet<Match>() { match };
+					innerList = new HashSet<Match> { match };
 					continue;
 				}
 
@@ -99,13 +99,13 @@ namespace ChessTournament
 				if (!isFound)
 					continue;
 
-				MergeFstToSndList(localList, result);
+				MergeLists(localList, result);
 			}
 
 			return result;
 		}
 
-		private static void MergeFstToSndList(IEnumerable<HashSet<Player>> firstList, ISet<HashSet<Player>> result)
+		private static void MergeLists(IEnumerable<HashSet<Player>> firstList, ISet<HashSet<Player>> result)
 		{ firstList.ToList().ForEach(item => result.Add(item)); }
 
 		internal static string DisplayRemainigLists(IEnumerable<HashSet<Player>> equalLists)
