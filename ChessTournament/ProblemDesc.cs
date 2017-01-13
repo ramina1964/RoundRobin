@@ -22,7 +22,7 @@ namespace ChessTournament
             NoOfRoundsDesired = noOfRounds;
             NoOfMatchesPerRound = NoOfPlayers / 2;
 
-            // NoOfPossibleMatches = NoOfPlayers / ( 2! * (NoOfPlayers - 2)! )
+            // Calculate No. of Possible Matches
             NoOfPossibleMatches = NoOfPlayers * (NoOfPlayers - 1) / 2;
             OutputFile = $"Results - {NoOfPlayers} Players.txt";
         }
