@@ -72,7 +72,7 @@ namespace ChessTournament
 
 		private string GetSummary(OutputMedium outputMedium)
 		{
-			var title = $"Summary of the Results\t\t\t@{DateTime.Now}";
+			var title = $"\nSummary of the Results\t\t\t@{DateTime.Now}";
 
 			var fstLine = $"No. Of Players:\t\t{NoOfPlayers,4}\t\t" +
 							$"Desired Rounds:\t\t{NoOfRoundsDesired,4}\t\tActual Rounds:\t\t{NoOfActualRounds,5}";
@@ -81,12 +81,12 @@ namespace ChessTournament
 						  $"{NoOfMatchesPlayed,4}\t\tElapsed Time(s):\t{ElapsedSeconds,5}";
 
 			var lastLine = $"Results are written to a File called \"{OutputFile}\".";
-			var sb = new StringBuilder().AppendLine(title).AppendLine(fstLine).AppendLine(sndLine).AppendLine();
+			var sb = new StringBuilder().AppendLine(title).AppendLine(fstLine).AppendLine(sndLine);
 
 			if (outputMedium == OutputMedium.Screen)
 				sb.AppendLine(lastLine);
 
-			return sb.ToString();
+			return sb.AppendLine().ToString();
 		}
 
 		private string GetRemainingGroup()
@@ -154,6 +154,7 @@ namespace ChessTournament
 			for (var roundNo = 0; roundNo < NoOfRoundsDesired; roundNo++)
 			{
 				var aRound = new Round(AllMatches, Players);
+				aRound.Setup();
 				if (aRound.Count != NoOfMatchesPerRound)
 					break;
 

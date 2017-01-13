@@ -15,15 +15,10 @@ namespace ChessTournament
 			NoOfPlayers = Players.Count;
 			NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
 			AllMatches = allMatches;
-
-			RoundMatches = SetupRound().ToList();
-			if (RoundMatches.Count == NoOfMatchesPerRound)
-			{ Cost = RoundCost; }
 		}
 
 		/********************************************** Class Interface **********************************************/
-
-		internal int Cost { get; }
+		internal int Cost { get; set; }
 
 		public int NoOfPlayers { get; }
 
@@ -32,6 +27,13 @@ namespace ChessTournament
 		internal int Count => RoundMatches.Count;
 
 		internal bool IsEmpty => RoundMatches.Count == 0;
+
+		internal void Setup()
+		{
+			RoundMatches = SetupRound().ToList();
+			if (RoundMatches.Count == NoOfMatchesPerRound)
+			{ Cost = RoundCost; }
+		}
 
 		public override string ToString() => Display();
 
@@ -95,7 +97,7 @@ namespace ChessTournament
 				!(match.SndPlayerId < startSndId) && !match.SndPlayer.IsBusy && !match.IsPlayed);
 		}
 
-		private List<Match> RoundMatches { get; }
+		private List<Match> RoundMatches { get; set; }
 
 		private string Display()
 		{
