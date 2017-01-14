@@ -14,12 +14,10 @@ namespace ChessTournament
 
 		internal static Player FindPlayerById(int id, IEnumerable<Player> players) => players.FirstOrDefault(p => p.Id == id);
 
-		internal static IEnumerable<Player> InitializePlayers
+		internal static IEnumerable<Player> InitializePlayers(int noOfPlayers)
 		{
-			get
-			{
 				var result = new HashSet<Player>();
-				for (var i = 0; i < NoOfPlayers; i++)
+				for (var i = 0; i < noOfPlayers; i++)
 				{
 					var id = StartPlayerId + i * IdStep;
 					var p = new Player(id, i + 1);
@@ -27,12 +25,12 @@ namespace ChessTournament
 				}
 
 				return result;
-			}
 		}
 
 		internal static IEnumerable<HashSet<Match>> InitializeAllMatches(IEnumerable<Player> players)
 		{
 			var pList = players.ToList();
+			var noOfPlayers = pList.Count;
 			var idList = GetAllPlayerIds(pList);
 			var result = new HashSet<HashSet<Match>>();
 
@@ -46,11 +44,11 @@ namespace ChessTournament
 				var p1 = FindPlayerById(item[0], pList);
 				var p2 = FindPlayerById(item[1], pList);
 				var match = new Match(p1, p2);
-				if (p2.Id == StartPlayerId && innerList.Count == NoOfPlayers)
+				if (p2.Id == StartPlayerId && innerList.Count == noOfPlayers)
 				{
 					result.Add(innerList);
 					innerList = new HashSet<Match> { match };
-					continue;
+					continue; 
 				}
 
 				innerList.Add(match);
@@ -132,7 +130,5 @@ namespace ChessTournament
 		{ return fstList.All(fstItem => sndList.Any(sndItem => sndItem.Id == fstItem.Id)); }
 
 		private static IList<int> GetAllPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
-
-		private static int NoOfPlayers => ProblemDesc.NoOfPlayers;
 	}
 }

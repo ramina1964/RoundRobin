@@ -12,12 +12,16 @@ namespace ChessTournament
 				while (true)
 				{
 					Console.Write("Enter No. of Players:\t");
-					var noOfPlayers = Convert.ToInt32(Console.ReadLine());
+					int noOfPlayers;
+					var isValidInt = int.TryParse(Console.ReadLine(), out noOfPlayers);
+					if (!isValidInt)
+						return;
+
 					var noOfRounds = noOfPlayers - 1;
 					var problemDesc = new ProblemDesc(noOfPlayers, noOfRounds);
 
 					// Simulate the round setup
-					var admin = new Admin();
+					var admin = new Admin(problemDesc);
 					admin.Simulate();
 
 					// Present the results

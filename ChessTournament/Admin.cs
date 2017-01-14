@@ -10,17 +10,18 @@ namespace ChessTournament
 	internal class Admin
 	{
 		/************************************************ Constructors ***********************************************/
-		internal Admin()
+		internal Admin(ProblemDesc problemDesc)
 		{
-			NoOfPlayers = ProblemDesc.NoOfPlayers;
-			MaxNoOfRounds = ProblemDesc.MaxNoOfRounds;
-			NoOfRoundsDesired = ProblemDesc.NoOfRoundsDesired;
-			NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
-			NoOfPossibleMatches = ProblemDesc.NoOfPossibleMatches;
-			OutputFile = ProblemDesc.OutputFile;
+			_problemDesc = problemDesc;
+			NoOfPlayers = problemDesc.NoOfPlayers;
+			MaxNoOfRounds = problemDesc.MaxNoOfRounds;
+			NoOfRoundsDesired = problemDesc.NoOfRoundsDesired;
+			NoOfMatchesPerRound = problemDesc.NoOfMatchesPerRound;
+			NoOfPossibleMatches = problemDesc.NoOfPossibleMatches;
+			OutputFile = problemDesc.OutputFile;
 
-			Players = Utility.InitializePlayers as HashSet<Player>;
-			AllMatches = Utility.InitializeAllMatches(Players);
+			Players = problemDesc.Players;
+			AllMatches = problemDesc.AllMatches;
 		}
 
 		/********************************************** Class Interface **********************************************/
@@ -153,7 +154,7 @@ namespace ChessTournament
 			var rounds = new List<Round>();
 			for (var roundNo = 0; roundNo < NoOfRoundsDesired; roundNo++)
 			{
-				var aRound = new Round(AllMatches, Players);
+				var aRound = new Round(_problemDesc);
 				aRound.Setup();
 				if (aRound.Count != NoOfMatchesPerRound)
 					break;
@@ -166,6 +167,8 @@ namespace ChessTournament
 		}
 
 		/*************************************************** Private Fields ****************************************************/
+		private readonly ProblemDesc _problemDesc;
+
 		private IEnumerable<HashSet<Match>> AllMatches { get; }
 
 		private List<Round> TriedRounds { get; set; }

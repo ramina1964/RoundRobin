@@ -9,12 +9,13 @@ namespace ChessTournament
 	{
 		/************************************************ Constructor ************************************************/
 
-		internal Round(IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
+		//internal Round(IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
+		internal Round(ProblemDesc problemDesc)
 		{
-			Players = players.ToList();
+			Players = problemDesc.Players.ToList();
 			NoOfPlayers = Players.Count;
-			NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
-			AllMatches = allMatches;
+			NoOfMatchesPerRound = problemDesc.NoOfMatchesPerRound;
+			AllMatches = problemDesc.AllMatches;
 		}
 
 		/********************************************** Class Interface **********************************************/
