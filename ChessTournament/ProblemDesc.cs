@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ChessTournament
 {
@@ -11,7 +12,7 @@ namespace ChessTournament
 
         // Min and Max values for NoOfRounds
         internal const int MinNoOfRounds = 3;
-        internal static int MaxNoOfRounds { get; set; }
+        internal int MaxNoOfRounds { get; set; }
 
         /************************************************ Constructor ************************************************/
         internal ProblemDesc(int noOfPlayers, int noOfRounds)
@@ -22,13 +23,20 @@ namespace ChessTournament
             NoOfRoundsDesired = noOfRounds;
             NoOfMatchesPerRound = NoOfPlayers / 2;
 
-            // NoOfPossibleMatches = NoOfPlayers / ( 2! * (NoOfPlayers - 2)! )
+            // Calculate No. of Possible Matches
             NoOfPossibleMatches = NoOfPlayers * (NoOfPlayers - 1) / 2;
             OutputFile = $"Results - {NoOfPlayers} Players.txt";
-        }
 
-        /********************************************** Class Interface **********************************************/
-        internal static int NoOfPlayers
+			Players = Utility.InitializePlayers(NoOfPlayers) as HashSet<Player>;
+			AllMatches = Utility.InitializeAllMatches(Players);
+		}
+
+		/********************************************** Class Interface **********************************************/
+		internal IEnumerable<HashSet<Match>> AllMatches { get; }
+
+		internal HashSet<Player> Players { get; set; }
+
+		internal int NoOfPlayers
         {
             get { return _noOfPlayers; }
 
@@ -42,7 +50,7 @@ namespace ChessTournament
             }
         }
 
-        internal static int NoOfRoundsDesired
+        internal int NoOfRoundsDesired
         {
             get { return _noOfRoundsDesired; }
             set
@@ -55,12 +63,12 @@ namespace ChessTournament
             }
         }
 
-        internal static int NoOfMatchesPerRound { get; set; }
-        internal static string OutputFile { get; set; }
-        internal static int NoOfPossibleMatches { get; set; }
+        internal int NoOfMatchesPerRound { get; set; }
+        internal string OutputFile { get; set; }
+        internal int NoOfPossibleMatches { get; set; }
 
         /*************************************************** Private Fields ****************************************************/
-        private static int _noOfPlayers;
-        private static int _noOfRoundsDesired;
-    }
+        private int _noOfPlayers;
+        private int _noOfRoundsDesired;
+	}
 }

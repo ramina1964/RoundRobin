@@ -10,18 +10,47 @@ namespace ChessTournament
 	internal class Admin
 	{
 		/************************************************ Constructors ***********************************************/
-		internal Admin()
+		internal Admin(ProblemDesc problemDesc)
 		{
-			NoOfPlayers = ProblemDesc.NoOfPlayers;
-			MaxNoOfRounds = ProblemDesc.MaxNoOfRounds;
-			NoOfRoundsDesired = ProblemDesc.NoOfRoundsDesired;
-			NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
-			NoOfPossibleMatches = ProblemDesc.NoOfPossibleMatches;
-			OutputFile = ProblemDesc.OutputFile;
+			_problemDesc = problemDesc;
+			NoOfPlayers = problemDesc.NoOfPlayers;
+			MaxNoOfRounds = problemDesc.MaxNoOfRounds;
+			NoOfRoundsDesired = problemDesc.NoOfRoundsDesired;
+			NoOfMatchesPerRound = problemDesc.NoOfMatchesPerRound;
+			NoOfPossibleMatches = problemDesc.NoOfPossibleMatches;
+			OutputFile = problemDesc.OutputFile;
 
-			Players = Utility.InitializePlayers.ToList();
-			AllMatches = Utility.InitializeAllMatches(Players);
+			Players = problemDesc.Players;
+			AllMatches = problemDesc.AllMatches;
+		}
 
+		/********************************************** Class Interface **********************************************/
+		internal int NoOfPlayers { get; }
+
+		internal int NoOfRoundsDesired { get; }
+
+		internal int MaxNoOfRounds { get; }
+
+		internal int NoOfMatchesPerRound { get; }
+
+		internal int NoOfPossibleMatches { get; }
+
+		internal string OutputFile { get; }
+
+		internal string ScreenSummary { get; set; }
+
+		internal List<Round> Rounds { get; set; }
+
+		internal bool IsDesiredNoOfRoundsMet { get; set; }
+
+		internal int NoOfActualRounds { get; set; }
+
+		internal int NoOfMatchesPlayed { get; set; }
+
+		internal int ElapsedSeconds { get; set; }
+
+		internal void Simulate()
+		{
 			TriedRounds = EstimateElapsedTime().ToList();
 			Rounds = GetCompletedRounds;
 			IsDesiredNoOfRoundsMet = Rounds.Count == NoOfRoundsDesired;
@@ -33,36 +62,18 @@ namespace ChessTournament
 			ScreenSummary = GetSummary(OutputMedium.Screen);
 		}
 
-		/********************************************** Class Interface **********************************************/
-		internal int NoOfPlayers { get; }
-
-		internal int NoOfRoundsDesired { get; }
-
-		internal int MaxNoOfRounds { get; }
-
-		internal List<Round> GetCompletedRounds => TriedRounds.Where(aRound => aRound.Count == NoOfMatchesPerRound).ToList();
-
-		internal int NoOfMatchesPerRound { get; }
-
-		internal int NoOfPossibleMatches { get; }
-
-		internal string OutputFile { get; }
-
-		internal string ScreenSummary { get; }
-
-		internal List<Round> Rounds { get; }
-
-		internal bool IsDesiredNoOfRoundsMet { get; }
-
-		internal int NoOfActualRounds { get; }
-
-		internal int NoOfMatchesPlayed { get; }
-
-		internal int ElapsedSeconds { get; set; }
-
-		internal string GetSummary(OutputMedium outputMedium)
+		public override string ToString()
 		{
-			var title = $"Summary of the Results\t\t\t@{DateTime.Now}";
+			return $"Desired No. of Rounds:\t{(IsDesiredNoOfRoundsMet ? "Met" : "Not Met")}\n" +
+				   "Results are written into the output file.";
+		}
+
+		/*************************************************** Private Methds ****************************************************/
+		private List<Round> GetCompletedRounds => TriedRounds.Where(aRound => aRound.Count == NoOfMatchesPerRound).ToList();
+
+		private string GetSummary(OutputMedium outputMedium)
+		{
+			var title = $"\nSummary of the Results\t\t\t@{DateTime.Now}";
 
 			var fstLine = $"No. Of Players:\t\t{NoOfPlayers,4}\t\t" +
 							$"Desired Rounds:\t\t{NoOfRoundsDesired,4}\t\tActual Rounds:\t\t{NoOfActualRounds,5}";
@@ -71,21 +82,14 @@ namespace ChessTournament
 						  $"{NoOfMatchesPlayed,4}\t\tElapsed Time(s):\t{ElapsedSeconds,5}";
 
 			var lastLine = $"Results are written to a File called \"{OutputFile}\".";
-			var sb = new StringBuilder().AppendLine(title).AppendLine(fstLine).AppendLine(sndLine).AppendLine();
+			var sb = new StringBuilder().AppendLine(title).AppendLine(fstLine).AppendLine(sndLine);
 
 			if (outputMedium == OutputMedium.Screen)
 				sb.AppendLine(lastLine);
 
-			return sb.ToString();
+			return sb.AppendLine().ToString();
 		}
 
-		public override string ToString()
-		{
-			return $"Desired No. of Rounds:\t{(IsDesiredNoOfRoundsMet ? "Met" : "Not Met")}\n" +
-				   "Results are written into the output file.";
-		}
-
-		/*************************************************** Private Methds ****************************************************/
 		private string GetRemainingGroup()
 		{
 			if (IsDesiredNoOfRoundsMet)
@@ -103,11 +107,8 @@ namespace ChessTournament
 			if (playerMatches.Count == 0)
 				return null;
 
-			foreach (var match in playerMatches)
-			{
-				if (!match.IsPlayed)
-				{ result.Add(match.SndPlayer); }
-			}
+			foreach (var match in playerMatches.Where(match => match.IsPlayed))
+			{ result.Add(match.SndPlayer); }
 
 			result.Add(player);
 			return result;
@@ -153,7 +154,8 @@ namespace ChessTournament
 			var rounds = new List<Round>();
 			for (var roundNo = 0; roundNo < NoOfRoundsDesired; roundNo++)
 			{
-				var aRound = new Round(AllMatches, Players);
+				var aRound = new Round(_problemDesc);
+				aRound.Setup();
 				if (aRound.Count != NoOfMatchesPerRound)
 					break;
 
@@ -165,12 +167,14 @@ namespace ChessTournament
 		}
 
 		/*************************************************** Private Fields ****************************************************/
+		private readonly ProblemDesc _problemDesc;
+
 		private IEnumerable<HashSet<Match>> AllMatches { get; }
 
-		private List<Round> TriedRounds { get; }
+		private List<Round> TriedRounds { get; set; }
 
-		private List<Player> Players { get; }
+		private HashSet<Player> Players { get; }
 
-		private void ResetPlayers() => Players.ForEach(p => p.IsBusy = false);
+		private void ResetPlayers() => Players.ToList().ForEach(p => p.IsBusy = false);
 	}
 }

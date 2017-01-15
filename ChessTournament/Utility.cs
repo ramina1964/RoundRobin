@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
-
 using Facet.Combinatorics;
 
 namespace ChessTournament
@@ -15,25 +15,23 @@ namespace ChessTournament
 
 		internal static Player FindPlayerById(int id, IEnumerable<Player> players) => players.FirstOrDefault(p => p.Id == id);
 
-		internal static IEnumerable<Player> InitializePlayers
+		internal static IEnumerable<Player> InitializePlayers(int noOfPlayers)
 		{
-			get
-			{
-				var result = new List<Player>(NoOfPlayers);
-				for (var i = 0; i < NoOfPlayers; i++)
+				var result = new HashSet<Player>();
+				for (var i = 0; i < noOfPlayers; i++)
 				{
-					var index = StartPlayerId + i * IdStep;
-					var p = new Player(index, i + 1);
-					result.Insert(i, p);
+					var id = StartPlayerId + i * IdStep;
+					var p = new Player(id, i + 1);
+					result.Add(p);
 				}
 
 				return result;
-			}
 		}
 
 		internal static IEnumerable<HashSet<Match>> InitializeAllMatches(IEnumerable<Player> players)
 		{
 			var pList = players.ToList();
+			var noOfPlayers = pList.Count;
 			var idList = GetAllPlayerIds(pList);
 			var result = new HashSet<HashSet<Match>>();
 
@@ -47,11 +45,11 @@ namespace ChessTournament
 				var p1 = FindPlayerById(item[0], pList);
 				var p2 = FindPlayerById(item[1], pList);
 				var match = new Match(p1, p2);
-				if (p2.Id == StartPlayerId && innerList.Count == NoOfPlayers)
+				if (p2.Id == StartPlayerId && innerList.Count == noOfPlayers)
 				{
 					result.Add(innerList);
-					innerList = new HashSet<Match>() { match };
-					continue;
+					innerList = new HashSet<Match> { match };
+					continue; 
 				}
 
 				innerList.Add(match);
@@ -99,13 +97,13 @@ namespace ChessTournament
 				if (!isFound)
 					continue;
 
-				MergeFstToSndList(localList, result);
+				MergeLists(localList, result);
 			}
 
 			return result;
 		}
 
-		private static void MergeFstToSndList(IEnumerable<HashSet<Player>> firstList, ISet<HashSet<Player>> result)
+		private static void MergeLists(IEnumerable<HashSet<Player>> firstList, ISet<HashSet<Player>> result)
 		{ firstList.ToList().ForEach(item => result.Add(item)); }
 
 		internal static string DisplayRemainigLists(IEnumerable<HashSet<Player>> equalLists)
@@ -125,7 +123,8 @@ namespace ChessTournament
 		internal static IEnumerable<Match> FindAllMatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
 		{
 			var pList = players.ToList();
-			return allMatches.ToList()[pList.IndexOf(player)];
+			//return allMatches.ToList()[pList.IndexOf(player)];
+			return allMatches.ToList().Find(item => item.First().FstPLayerId == player.Id);
 		}
 
 		/*********************************************** Private Fields **********************************************/
@@ -133,7 +132,5 @@ namespace ChessTournament
 		{ return fstList.All(fstItem => sndList.Any(sndItem => sndItem.Id == fstItem.Id)); }
 
 		private static IList<int> GetAllPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
-
-		private static int NoOfPlayers => ProblemDesc.NoOfPlayers;
 	}
 }

@@ -8,21 +8,18 @@ namespace ChessTournament
 	internal class Round
 	{
 		/************************************************ Constructor ************************************************/
-		internal Round(IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
-		{
-			Players = players.ToList();
-			NoOfPlayers = Players.Count;
-			NoOfMatchesPerRound = ProblemDesc.NoOfMatchesPerRound;
-			AllMatches = allMatches;
 
-			RoundMatches = SetupRound().ToList();
-			if (RoundMatches.Count == NoOfMatchesPerRound)
-				Cost = RoundCost;
+		//internal Round(IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
+		internal Round(ProblemDesc problemDesc)
+		{
+			Players = problemDesc.Players.ToList();
+			NoOfPlayers = Players.Count;
+			NoOfMatchesPerRound = problemDesc.NoOfMatchesPerRound;
+			AllMatches = problemDesc.AllMatches;
 		}
 
 		/********************************************** Class Interface **********************************************/
-
-		internal int Cost { get; }
+		internal int Cost { get; set; }
 
 		public int NoOfPlayers { get; }
 
@@ -31,6 +28,13 @@ namespace ChessTournament
 		internal int Count => RoundMatches.Count;
 
 		internal bool IsEmpty => RoundMatches.Count == 0;
+
+		internal void Setup()
+		{
+			RoundMatches = SetupRound().ToList();
+			if (RoundMatches.Count == NoOfMatchesPerRound)
+			{ Cost = RoundCost; }
+		}
 
 		public override string ToString() => Display();
 
@@ -94,7 +98,7 @@ namespace ChessTournament
 				!(match.SndPlayerId < startSndId) && !match.SndPlayer.IsBusy && !match.IsPlayed);
 		}
 
-		private List<Match> RoundMatches { get; }
+		private List<Match> RoundMatches { get; set; }
 
 		private string Display()
 		{
