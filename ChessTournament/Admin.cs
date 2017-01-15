@@ -47,12 +47,12 @@ namespace ChessTournament
 
 		internal int NoOfMatchesPlayed { get; set; }
 
-		internal int ElapsedSeconds { get; set; }
+		internal int ElapsedTimeInSec { get; set; }
 
 		internal void Simulate()
 		{
 			TriedRounds = EstimateElapsedTime().ToList();
-			Rounds = GetCompletedRounds;
+			Rounds = GetCompletedRounds.ToList();
 			IsDesiredNoOfRoundsMet = Rounds.Count == NoOfRoundsDesired;
 
 			NoOfActualRounds = Rounds.Count;
@@ -69,7 +69,7 @@ namespace ChessTournament
 		}
 
 		/*************************************************** Private Methds ****************************************************/
-		private List<Round> GetCompletedRounds => TriedRounds.Where(aRound => aRound.Count == NoOfMatchesPerRound).ToList();
+		private IEnumerable<Round> GetCompletedRounds => TriedRounds.Where(aRound => aRound.Count == NoOfMatchesPerRound);
 
 		private string GetSummary(OutputMedium outputMedium)
 		{
@@ -79,7 +79,7 @@ namespace ChessTournament
 							$"Desired Rounds:\t\t{NoOfRoundsDesired,4}\t\tActual Rounds:\t\t{NoOfActualRounds,5}";
 
 			var sndLine = $"Possible Matches:\t{NoOfPossibleMatches,4}\t\tActual Matches:\t\t" +
-						  $"{NoOfMatchesPlayed,4}\t\tElapsed Time(s):\t{ElapsedSeconds,5}";
+						  $"{NoOfMatchesPlayed,4}\t\tElapsed Time(s):\t{ElapsedTimeInSec,5}";
 
 			var lastLine = $"Results are written to a File called \"{OutputFile}\".";
 			var sb = new StringBuilder().AppendLine(title).AppendLine(fstLine).AppendLine(sndLine);
@@ -107,7 +107,7 @@ namespace ChessTournament
 			if (playerMatches.Count == 0)
 				return null;
 
-			foreach (var match in playerMatches.Where(match => match.IsPlayed))
+			foreach (var match in playerMatches.Where(match => !match.IsPlayed))
 			{ result.Add(match.SndPlayer); }
 
 			result.Add(player);
@@ -145,7 +145,7 @@ namespace ChessTournament
 			var watch = Stopwatch.StartNew();
 			var rounds = SetupRounds();
 			watch.Stop();
-			ElapsedSeconds = (int)watch.ElapsedMilliseconds / 1000;
+			ElapsedTimeInSec = (int)watch.ElapsedMilliseconds / 1000;
 			return rounds;
 		}
 

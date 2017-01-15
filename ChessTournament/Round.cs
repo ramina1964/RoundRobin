@@ -8,8 +8,6 @@ namespace ChessTournament
 	internal class Round
 	{
 		/************************************************ Constructor ************************************************/
-
-		//internal Round(IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
 		internal Round(ProblemDesc problemDesc)
 		{
 			Players = problemDesc.Players.ToList();
