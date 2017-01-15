@@ -103,8 +103,11 @@ namespace ChessTournament
 			if (playerMatches.Count == 0)
 				return null;
 
-			foreach (var match in playerMatches.Where(match => match.IsPlayed))
-			{ result.Add(match.SndPlayer); }
+			foreach (var match in playerMatches)
+			{
+				if (!match.IsPlayed)
+				{ result.Add(match.SndPlayer); }
+			}
 
 			result.Add(player);
 			return result;
