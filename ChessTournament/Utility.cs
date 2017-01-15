@@ -129,7 +129,7 @@ namespace ChessTournament
 
 		/*********************************************** Private Fields **********************************************/
 		private static bool AreListsEqual(IEnumerable<Player> fstList, IEnumerable<Player> sndList)
-		{ return fstList.All(item1 => sndList.Any(item2 => item2.Id == item1.Id)); }
+		{ return fstList.All(fstItem => sndList.Any(sndItem => sndItem.Id == fstItem.Id)); }
 
 		private static IList<int> GetAllPlayerIds(IEnumerable<Player> players) => players.Select(item => item.Id).ToList();
 
