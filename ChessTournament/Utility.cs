@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using Facet.Combinatorics;
 
@@ -122,7 +123,8 @@ namespace ChessTournament
 		internal static IEnumerable<Match> FindAllMatchesFor(Player player, IEnumerable<HashSet<Match>> allMatches, IEnumerable<Player> players)
 		{
 			var pList = players.ToList();
-			return allMatches.ToList()[pList.IndexOf(player)];
+			//return allMatches.ToList()[pList.IndexOf(player)];
+			return allMatches.ToList().Find(item => item.First().FstPLayerId == player.Id);
 		}
 
 		/*********************************************** Private Fields **********************************************/
