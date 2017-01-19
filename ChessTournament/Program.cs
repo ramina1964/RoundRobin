@@ -12,8 +12,7 @@ namespace ChessTournament
 				while (true)
 				{
 					Console.Write("Enter No. of Players:\t");
-					int noOfPlayers;
-					var isValidInt = int.TryParse(Console.ReadLine(), out noOfPlayers);
+					var isValidInt = int.TryParse(Console.ReadLine(), out int noOfPlayers);
 					if (!isValidInt)
 						return;
 
