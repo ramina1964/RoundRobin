@@ -77,7 +77,7 @@ namespace ChessTournament
 		{
 			var partners = partnerList.ToList();
 			var count = partners.Count;
-			var result = new HashSet<HashSet<Player>>();
+			var result = new List<HashSet<Player>>();
 			for (var i = 0; i < count - 1; i++)
 			{
 				var fstPlayerList = partners[i];
@@ -96,14 +96,14 @@ namespace ChessTournament
 				if (!isFound)
 					continue;
 
-				MergeLists(localList, result);
+				result = result.Union(localList).ToList();
 			}
 
 			return result;
 		}
 
-		private static void MergeLists(IEnumerable<HashSet<Player>> firstList, ISet<HashSet<Player>> result)
-		{ firstList.ToList().ForEach(item => result.Add(item)); }
+		//private static void MergeLists(IEnumerable<HashSet<Player>> firstList, ISet<HashSet<Player>> result)
+		//{ firstList.ToList().ForEach(item => result.Add(item)); }
 
 		internal static string DisplayRemainigLists(IEnumerable<HashSet<Player>> equalLists)
 		{
