@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ChessTournament
+namespace ChessTournament.Model
 {
 	public class Player : IComparer<Player>
 	{

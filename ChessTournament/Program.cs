@@ -1,4 +1,5 @@
 ﻿using System;
+using ChessTournament.Model;
 
 namespace ChessTournament
 {

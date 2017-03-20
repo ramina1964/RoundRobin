@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-//using ChessTournament.Enums;
-using static System.IO.File;
+using ChessTournament.Enums;
 
-namespace ChessTournament
+namespace ChessTournament.Model
 {
 	public class Admin
 	{
@@ -121,7 +121,7 @@ namespace ChessTournament
 			var remainingGroup = GetRemainingGroup();
 			var content = DisplayResults(fileSummary, remainingGroup);
 
-			WriteAllText(OutputFile, content);
+			File.WriteAllText(OutputFile, content);
 		}
 
 		private string DisplayResults(string summary, string remainingGroup = "")

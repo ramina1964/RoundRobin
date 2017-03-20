@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ChessTournament.Model;
 
 namespace ChessTournament.Interfaces
 {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using ChessTournament.Combinatorics;
 
-namespace ChessTournament
+namespace ChessTournament.Model
 {
 	public class Utility
 	{

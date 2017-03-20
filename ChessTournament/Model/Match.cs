@@ -1,5 +1,5 @@
 ﻿
-namespace ChessTournament
+namespace ChessTournament.Model
 {
 	public class Match
 	{

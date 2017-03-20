@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using ChessTournament.Interfaces;
 
-namespace ChessTournament
+namespace ChessTournament.Model
 {
-	public class ProblemDesc : Interfaces.IProblemDesc
+	public class ProblemDesc : IProblemDesc
 	{
 		/************************************************* Constants *************************************************/
 		// Min and Max values for NoOfPlayers

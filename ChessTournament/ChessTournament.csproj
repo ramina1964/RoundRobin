@@ -65,7 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin.cs" />
+    <Compile Include="Model\Admin.cs" />
     <Compile Include="Combinatorics\Combinations.cs" />
     <Compile Include="Combinatorics\GenerateOption.cs" />
     <Compile Include="Combinatorics\IMetaCollection.cs" />
@@ -74,14 +74,13 @@
     <Compile Include="Combinatorics\Variations.cs" />
     <Compile Include="Enums\OutputMedium.cs" />
     <Compile Include="Interfaces\IProblemDesc.cs" />
-    <Compile Include="Match.cs" />
-    <Compile Include="OutputMedium.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="ProblemDesc.cs" />
+    <Compile Include="Model\Match.cs" />
+    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\ProblemDesc.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Round.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="Model\Round.cs" />
+    <Compile Include="Model\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
