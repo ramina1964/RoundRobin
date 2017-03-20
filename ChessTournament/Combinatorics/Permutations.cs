@@ -1,10 +1,11 @@
 // Copyright 2008 Adrian Akison
 // Distributed under license terms of CPOL http://www.codeproject.com/info/cpol10.aspx
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Facet.Combinatorics {
+namespace ChessTournament.Combinatorics {
     /// <summary>
     /// Permutations defines a meta-collection, typically a list of lists, of all
     /// possible orderings of a set of values.  This list is enumerable and allows

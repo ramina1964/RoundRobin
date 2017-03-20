@@ -5,10 +5,10 @@ using System.Text;
 
 namespace ChessTournament
 {
-	internal class Round
+	public class Round
 	{
 		/************************************************ Constructor ************************************************/
-		internal Round(ProblemDesc problemDesc)
+		public Round(Interfaces.IProblemDesc problemDesc)
 		{
 			Players = problemDesc.Players.ToList();
 			NoOfPlayers = Players.Count;

@@ -1,10 +1,9 @@
 // Copyright 2008 Adrian Akison
 // Distributed under license terms of CPOL http://www.codeproject.com/info/cpol10.aspx
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Facet.Combinatorics {
+using System.Collections.Generic;
+
+namespace ChessTournament.Combinatorics {
     /// <summary>
     /// Interface for Permutations, Combinations and any other classes that present
     /// a collection of collections based on an input collection.  The enumerators that 

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ChessTournament
 {
-	internal class Player : IComparer<Player>
+	public class Player : IComparer<Player>
 	{
 		/************************************************ Constructor ************************************************/
-		internal Player(int id, int rank)
+		public Player(int id, int rank)
 		{
 			Id = id;
 			Rank = rank;
@@ -20,7 +20,7 @@ namespace ChessTournament
 
 			set
 			{
-				if(0 > value || value > 1000000 )
+				if (0 > value || value > 1000000)
 					throw new ArgumentOutOfRangeException(nameof(Id), value, "Value of Player ID is out of range!");
 
 				_id = value;

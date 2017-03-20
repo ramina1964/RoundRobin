@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Facet.Combinatorics;
+using ChessTournament.Combinatorics;
 
 namespace ChessTournament
 {
@@ -16,15 +16,15 @@ namespace ChessTournament
 
 		internal static IEnumerable<Player> InitializePlayers(int noOfPlayers)
 		{
-				var result = new HashSet<Player>();
-				for (var i = 0; i < noOfPlayers; i++)
-				{
-					var id = StartPlayerId + i * IdStep;
-					var p = new Player(id, i + 1);
-					result.Add(p);
-				}
+			var result = new HashSet<Player>();
+			for (var i = 0; i < noOfPlayers; i++)
+			{
+				var id = StartPlayerId + i * IdStep;
+				var p = new Player(id, i + 1);
+				result.Add(p);
+			}
 
-				return result;
+			return result;
 		}
 
 		internal static IEnumerable<HashSet<Match>> InitializeAllMatches(IEnumerable<Player> players)
@@ -48,7 +48,7 @@ namespace ChessTournament
 				{
 					result.Add(innerList);
 					innerList = new HashSet<Match> { match };
-					continue; 
+					continue;
 				}
 
 				innerList.Add(match);

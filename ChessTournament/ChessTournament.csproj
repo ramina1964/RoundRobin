@@ -72,6 +72,8 @@
     <Compile Include="Combinatorics\Permutations.cs" />
     <Compile Include="Combinatorics\SmallPrimeUtility.cs" />
     <Compile Include="Combinatorics\Variations.cs" />
+    <Compile Include="Enums\OutputMedium.cs" />
+    <Compile Include="Interfaces\IProblemDesc.cs" />
     <Compile Include="Match.cs" />
     <Compile Include="OutputMedium.cs" />
     <Compile Include="Player.cs" />

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+//using ChessTournament.Enums;
 using static System.IO.File;
 
 namespace ChessTournament
 {
-	internal class Admin
+	public class Admin
 	{
 		/************************************************ Constructors ***********************************************/
-		internal Admin(ProblemDesc problemDesc)
+		public Admin(Interfaces.IProblemDesc problemDesc)
 		{
 			_problemDesc = problemDesc;
 			NoOfPlayers = problemDesc.NoOfPlayers;
@@ -167,7 +168,7 @@ namespace ChessTournament
 		}
 
 		/*************************************************** Private Fields ****************************************************/
-		private readonly ProblemDesc _problemDesc;
+		private readonly Interfaces.IProblemDesc _problemDesc;
 
 		private IEnumerable<HashSet<Match>> AllMatches { get; }
 

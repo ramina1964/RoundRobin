@@ -1,10 +1,9 @@
 // Copyright 2008 Adrian Akison
 // Distributed under license terms of CPOL http://www.codeproject.com/info/cpol10.aspx
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Facet.Combinatorics {
+using System.Collections.Generic;
+
+namespace ChessTournament.Combinatorics {
     /// <summary>
     /// Combinations defines a meta-collection, typically a list of lists, of all possible 
     /// subsets of a particular size from the set of values.  This list is enumerable and 

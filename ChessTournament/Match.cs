@@ -1,10 +1,10 @@
 ﻿
 namespace ChessTournament
 {
-	internal class Match
+	public class Match
 	{
 		/************************************************ Constructor ************************************************/
-		internal Match(Player fstPlayer, Player sndPlayer)
+		public Match(Player fstPlayer, Player sndPlayer)
 		{
 			FstPlayer = fstPlayer;
 			SndPlayer = sndPlayer;

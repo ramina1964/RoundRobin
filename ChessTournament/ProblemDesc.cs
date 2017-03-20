@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ChessTournament
 {
-	internal class ProblemDesc
+	public class ProblemDesc : Interfaces.IProblemDesc
 	{
 		/************************************************* Constants *************************************************/
 		// Min and Max values for NoOfPlayers
@@ -12,10 +12,10 @@ namespace ChessTournament
 
 		// Min and Max values for NoOfRounds
 		internal const int MinNoOfRounds = 3;
-		internal int MaxNoOfRounds { get; set; }
+
 
 		/************************************************ Constructor ************************************************/
-		internal ProblemDesc(int noOfPlayers, int noOfRounds)
+		public ProblemDesc(int noOfPlayers, int noOfRounds)
 		{
 			NoOfPlayers = noOfPlayers;
 			MaxNoOfRounds = NoOfPlayers - 1;
@@ -31,15 +31,11 @@ namespace ChessTournament
 			AllMatches = Utility.InitializeAllMatches(Players);
 		}
 
-		/********************************************** Class Interface **********************************************/
-		internal IEnumerable<HashSet<Match>> AllMatches { get; }
-
-		internal HashSet<Player> Players { get; set; }
-
-		internal int NoOfPlayers
+		/********************************************** Methods and Properties **********************************************/
+		// IProblemDesc Implementation
+		public int NoOfPlayers
 		{
 			get { return _noOfPlayers; }
-
 			set
 			{
 				if (MinNoOfPlayers > value || value > MaxNoOfPlayers || value % 2 != 0)
@@ -49,8 +45,8 @@ namespace ChessTournament
 				_noOfPlayers = value;
 			}
 		}
-
-		internal int NoOfRoundsDesired
+		public int MaxNoOfRounds { get; set; }
+		public int NoOfRoundsDesired
 		{
 			get { return _noOfRoundsDesired; }
 			set
@@ -62,10 +58,11 @@ namespace ChessTournament
 				_noOfRoundsDesired = value;
 			}
 		}
-
-		internal int NoOfMatchesPerRound { get; set; }
-		internal string OutputFile { get; set; }
-		internal int NoOfPossibleMatches { get; set; }
+		public int NoOfMatchesPerRound { get; set; }
+		public string OutputFile { get; set; }
+		public int NoOfPossibleMatches { get; set; }
+		public HashSet<Player> Players { get; set; }
+		public IEnumerable<HashSet<Match>> AllMatches { get; }
 
 		/*************************************************** Private Fields ****************************************************/
 		private int _noOfPlayers;

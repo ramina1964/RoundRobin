@@ -1,10 +1,10 @@
 // Copyright 2008 Adrian Akison
 // Distributed under license terms of CPOL http://www.codeproject.com/info/cpol10.aspx
+
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Facet.Combinatorics {
+namespace ChessTournament.Combinatorics {
     /// <summary>
     /// Variations defines a meta-collection, typically a list of lists, of all possible 
     /// ordered subsets of a particular size from the set of values.  

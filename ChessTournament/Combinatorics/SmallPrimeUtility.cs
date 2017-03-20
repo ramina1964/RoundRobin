@@ -1,11 +1,10 @@
 // Copyright 2008 Adrian Akison
 // Distributed under license terms of CPOL http://www.codeproject.com/info/cpol10.aspx
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections;
 
-namespace Facet.Combinatorics {
+using System.Collections;
+using System.Collections.Generic;
+
+namespace ChessTournament.Combinatorics {
     /// <summary>
     /// Utility class that maintains a small table of prime numbers and provides
     /// simple implementations of Prime Factorization algorithms.  
