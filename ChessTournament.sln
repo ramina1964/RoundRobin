@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessTournament", "ChessTournament\ChessTournament.csproj", "{25C7BEC5-0469-4F31-A309-3A06B5FE19A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessTournament.Test", "ChesTournament.Test\ChessTournament.Test.csproj", "{D3380106-6A1A-4BD3-9EEC-F54FEE57F752}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpTest", "FSharpTest\FSharpTest.fsproj", "{6F6A537B-07C4-4A9E-A305-142FC6CB02D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{D3380106-6A1A-4BD3-9EEC-F54FEE57F752}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3380106-6A1A-4BD3-9EEC-F54FEE57F752}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3380106-6A1A-4BD3-9EEC-F54FEE57F752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F6A537B-07C4-4A9E-A305-142FC6CB02D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F6A537B-07C4-4A9E-A305-142FC6CB02D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F6A537B-07C4-4A9E-A305-142FC6CB02D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F6A537B-07C4-4A9E-A305-142FC6CB02D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ECBBFA05-C67F-49C9-B50C-7789BFF82F26}
 	EndGlobalSection
 EndGlobal

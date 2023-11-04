@@ -32,25 +32,25 @@ namespace ChessTournament.Model
 
 		internal int MaxNoOfRounds { get; }
 
-		internal int NoOfMatchesPerRound { get; }
+		public int NoOfMatchesPerRound { get; }
 
-		internal int NoOfPossibleMatches { get; }
+		public int NoOfPossibleMatches { get; }
 
 		internal string OutputFile { get; }
 
 		internal string ScreenSummary { get; set; }
 
-		internal List<Round> Rounds { get; set; }
+		public List<Round> Rounds { get; set; }
 
-		internal bool IsDesiredNoOfRoundsMet { get; set; }
+		public bool IsDesiredNoOfRoundsMet { get; set; }
 
-		internal int NoOfActualRounds { get; set; }
+		public int NoOfActualRounds { get; set; }
 
-		internal int NoOfMatchesPlayed { get; set; }
+		public int NoOfMatchesPlayed { get; set; }
 
-		internal int ElapsedTimeInSec { get; set; }
+		public int ElapsedTimeInSec { get; set; }
 
-		internal void Simulate()
+		public void Simulate()
 		{
 			TriedRounds = EstimateElapsedTime().ToList();
 			Rounds = GetCompletedRounds.ToList();
@@ -170,7 +170,7 @@ namespace ChessTournament.Model
 		/*************************************************** Private Fields ****************************************************/
 		private readonly Interfaces.IProblemDesc _problemDesc;
 
-		private IEnumerable<HashSet<Match>> AllMatches { get; }
+		public IEnumerable<HashSet<Match>> AllMatches { get; }
 
 		private List<Round> TriedRounds { get; set; }
 
